@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "myjobfinder-93bd0": {
+      "hosting": {
+        "myjobfinder": [
+          "myjobfinder-93bd0"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "myjobfinder-93bd0"
+  }
+}

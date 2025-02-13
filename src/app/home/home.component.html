@@ -1,1 +1,16 @@
-<p>home works!</p>
+<h1>{{ title }}</h1>
+<div *ngFor="let job of jobs" class="job-card">
+  <h2>{{ job.jobTitle }}</h2>
+  
+  <div class="metadata">
+    <span>{{ job.companyName }}</span>
+    <span>{{ job.jobGeo }}</span>
+    <span *ngFor="let type of job.jobType">{{ type }}</span>
+  </div>
+  
+  <p><strong>Industry:</strong> {{ job.jobIndustry.join(', ') }}</p>
+  
+  <p class="job-excerpt">{{ job.jobExcerpt }}</p>
+  
+  <a [href]="job.url" target="_blank" class="view-job">View Job</a>
+</div>

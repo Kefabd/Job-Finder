@@ -1,23 +1,34 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Auth, signOut } from '@angular/fire/auth';
+import { ApiService } from '../services/api.service';
+import { Job } from '../models';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  template: `
-    <h1>Welcome to the Protected Area</h1>
-    <p>You are now logged in and viewing the protected app component.</p>
-    <button (click)="logout()">Logout</button>
-  `,
-  styles: [`
-    h1 { color: #2e7d32; }
-    p { font-size: 1.2rem; }
-    button { padding: 8px 16px; font-size: 1rem; }
-  `]
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+  title = 'myjobfinder';
+  jobs: Job[] = [];
+
+  constructor(private api: ApiService) {}
+
   private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
+
+  ngOnInit() {
+    this.api.getJobs(5, 'usa', 'data-science').subscribe(
+      (response) => {
+        console.log('API Response:', response); // Log the response
+        this.jobs = response.jobs;
+      },
+      (error) => {
+        console.error('API Error:', error); // Log any errors
+      }
+    );
+  }
 
   async logout() {
     await signOut(this.auth);

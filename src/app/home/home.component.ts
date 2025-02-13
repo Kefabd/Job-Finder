@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit{
     }
 
 
-    this.api.getJobs(5, 'usa', 'data-science').subscribe(
+    this.api.getJobs(9, 'usa', 'data-science').subscribe(
       (response) => {
         console.log('API Response:', response); // Log the response
         this.jobs = response.jobs;

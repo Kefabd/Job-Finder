@@ -10,8 +10,9 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit{
-  title = 'myjobfinder';
+  title = 'My Job Finder';
   jobs: Job[] = [];
+  userEmail: string | null = null;
 
   constructor(private api: ApiService) {}
 
@@ -19,6 +20,20 @@ export class HomeComponent implements OnInit{
   private router: Router = inject(Router);
 
   ngOnInit() {
+    const userDataString = sessionStorage.getItem('user');
+    if (userDataString) {
+      try {
+        this.userEmail = JSON.parse(userDataString);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        this.router.navigate(['/login']); // Redirect if data is invalid
+      }
+    } else {
+      // If no user data is found, redirect to login
+      this.router.navigate(['/login']);
+    }
+
+
     this.api.getJobs(5, 'usa', 'data-science').subscribe(
       (response) => {
         console.log('API Response:', response); // Log the response
@@ -32,6 +47,7 @@ export class HomeComponent implements OnInit{
 
   async logout() {
     await signOut(this.auth);
+    sessionStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }

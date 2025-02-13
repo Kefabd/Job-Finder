@@ -30,6 +30,7 @@ export class LoginComponent {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       console.log('Logged in user:', userCredential.user);
+      sessionStorage.setItem('user', JSON.stringify(email))
       // Redirect to the protected route
       this.router.navigate(['/app']);
     } catch (error: any) {

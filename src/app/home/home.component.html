@@ -1,16 +1,60 @@
-<h1>{{ title }}</h1>
-<div *ngFor="let job of jobs" class="job-card">
-  <h2>{{ job.jobTitle }}</h2>
-  
-  <div class="metadata">
-    <span>{{ job.companyName }}</span>
-    <span>{{ job.jobGeo }}</span>
-    <span *ngFor="let type of job.jobType">{{ type }}</span>
+<div class="page-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <h1 class="site-title">{{ title }}</h1>
+      <div class="user-controls">
+        <button (click)="logout()" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Welcome Section -->
+  <header class="welcome-section" *ngIf="userEmail">
+    <div class="welcome-content">
+      <h2>Welcome <span class="user-email" *ngIf="userEmail">{{ userEmail }}</span></h2>
+      <p class="welcome-message">Find your next opportunity</p>
+    </div>
+  </header>
+
+  <!-- Jobs Grid Container -->
+  <main class="jobs-container">
+    <!-- Job Cards -->
+    <article class="job-card" *ngFor="let job of jobs">
+      <div class="job-header">
+        <h2 class="job-title">{{ job.jobTitle }}</h2>
+        <div class="company-info">
+          <span class="company-name">{{ job.companyName }}</span>
+          <span class="location">{{ job.jobGeo }}</span>
+        </div>
+      </div>
+
+      <div class="job-types">
+        <span class="job-type-tag" *ngFor="let type of job.jobType">{{ type }}</span>
+      </div>
+
+      <div class="job-details">
+        <div class="industry-section">
+          <strong>Industry:</strong>
+          <span class="industry-tags">{{ job.jobIndustry.join(', ') }}</span>
+        </div>
+        
+        <p class="job-description">{{ job.jobExcerpt }}</p>
+      </div>
+
+      <div class="card-footer">
+        <a [href]="job.url" 
+           target="_blank" 
+           class="view-job-btn"
+           rel="noopener noreferrer">
+          View Job Details
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <!-- No Jobs Found Message -->
+  <div class="no-jobs-message" *ngIf="jobs.length === 0">
+    <p>No jobs found matching your criteria.</p>
   </div>
-  
-  <p><strong>Industry:</strong> {{ job.jobIndustry.join(', ') }}</p>
-  
-  <p class="job-excerpt">{{ job.jobExcerpt }}</p>
-  
-  <a [href]="job.url" target="_blank" class="view-job">View Job</a>
 </div>

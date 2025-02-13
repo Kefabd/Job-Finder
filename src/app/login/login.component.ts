@@ -1,6 +1,8 @@
+// src/app/login/login.component.ts
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,9 +10,9 @@ import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  // Inject AngularFire Auth and FormBuilder
   private auth: Auth = inject(Auth);
   private fb: FormBuilder = inject(FormBuilder);
+  private router: Router = inject(Router);
 
   loginForm: FormGroup;
   errorMessage: string = '';
@@ -23,16 +25,13 @@ export class LoginComponent {
   }
 
   async login() {
-    this.errorMessage = '';
-    if (this.loginForm.invalid) {
-      return;
-    }
-
+    if (this.loginForm.invalid) return;
     const { email, password } = this.loginForm.value;
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       console.log('Logged in user:', userCredential.user);
-      // Optionally redirect the user or perform additional actions upon successful login
+      // Redirect to the protected route
+      this.router.navigate(['/app']);
     } catch (error: any) {
       console.error('Login error:', error);
       this.errorMessage = error.message;

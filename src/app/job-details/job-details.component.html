@@ -1,0 +1,32 @@
+<!-- job-details.component.html -->
+<div class="job-details-page" *ngIf="job">
+    <div class="back-button-container">
+      <button class="back-button" (click)="goBack()">← Back</button>
+    </div>
+    
+    <header class="job-header">
+      <img [src]="job.companyLogo" alt="{{ job.companyName }} logo" class="company-logo">
+      <h1>{{ job.jobTitle }}</h1>
+      <h2>{{ job.companyName }}</h2>
+    </header>
+  
+    <section class="job-info">
+      <p><strong>Industry:</strong> {{ job.jobIndustry }}</p>
+      <p><strong>Type:</strong> {{ job.jobType }}</p>
+      <p><strong>Location:</strong> {{ job.jobGeo }}</p>
+      <p><strong>Seniority:</strong> {{ job.jobLevel }}</p>
+      <p><strong>Published on:</strong> {{ job.pubDate | date }}</p>
+    </section>
+  
+    <section class="job-description">
+      <div [innerHTML]="job.jobDescription"></div>
+    </section>
+  
+    <footer>
+      <a [href]="job.url" target="_blank" rel="noopener noreferrer">Apply Now</a>
+    </footer>
+</div>
+
+<div *ngIf="!job">
+<p>Loading job details...</p>
+</div>

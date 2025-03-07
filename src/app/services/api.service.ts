@@ -15,4 +15,6 @@ export class ApiService {
     const url = `${this.baseUrl}/remote-jobs?count=${count}&geo=${geo}&industry=${industry}`;
     return this.http.get<{ jobs: Job[] }>(url);
   }
+  
+
 }

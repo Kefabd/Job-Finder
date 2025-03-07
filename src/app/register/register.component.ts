@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,23 +10,24 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  // Inject AngularFire Auth and FormBuilder
   private auth: Auth = inject(Auth);
   private fb: FormBuilder = inject(FormBuilder);
+  // Inject Firestore using the new modular API
+  private firestore: Firestore = inject(Firestore);
+  private router: Router = inject(Router);
 
   registerForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
 
   constructor() {
-    this.registerForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required]
-      },
-      { validators: this.passwordMatchValidator }
-    );
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
   }
 
   // Custom validator to check if passwords match
@@ -37,19 +40,51 @@ export class RegisterComponent {
   async register() {
     this.errorMessage = '';
     this.successMessage = '';
-    if (this.registerForm.invalid) {
-      return;
-    }
+    if (this.registerForm.invalid) return;
 
-    const { email, password } = this.registerForm.value;
+    const { firstName, lastName, email, password } = this.registerForm.value;
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       console.log('Registered user:', userCredential.user);
-      this.successMessage = 'Registration successful! You can now log in.';
-      // Optionally, redirect the user to the login page
+      // Save additional user data to Firestore using the new modular API:
+      await this.saveUserToFirestore(userCredential.user, { firstName, lastName });
+      this.successMessage = 'Registration successful!';
+      this.router.navigate(['/app']);
     } catch (error: any) {
       console.error('Registration error:', error);
       this.errorMessage = error.message;
     }
+  }
+
+  async registerWithGoogle() {
+    this.errorMessage = '';
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(this.auth, provider);
+      const user = result.user;
+      console.log('Google registration success:', user);
+      let firstName = '';
+      let lastName = '';
+      if (user.displayName) {
+        const names = user.displayName.split(' ');
+        firstName = names[0];
+        lastName = names.slice(1).join(' ');
+      }
+      await this.saveUserToFirestore(user, { firstName, lastName });
+      this.router.navigate(['/app']);
+    } catch (error: any) {
+      console.error('Google registration error:', error);
+      this.errorMessage = error.message;
+    }
+  }
+
+  // Use Firestore's doc() and setDoc() from the modular API
+  private async saveUserToFirestore(user: any, data: { firstName: string, lastName: string }) {
+    const userRef = doc(this.firestore, 'users', user.uid);
+    await setDoc(userRef, {
+      email: user.email,
+      firstName: data.firstName,
+      lastName: data.lastName
+    }, { merge: true });
   }
 }

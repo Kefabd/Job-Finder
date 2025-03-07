@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     RegisterComponent,
     HomeComponent,
     JobDetailsComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

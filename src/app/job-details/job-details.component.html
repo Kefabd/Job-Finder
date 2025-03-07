@@ -1,30 +1,43 @@
 <!-- job-details.component.html -->
 <div class="job-details-page" *ngIf="job">
-    <div class="back-button-container">
-      <button class="back-button" (click)="goBack()">← Back</button>
-    </div>
-    
-    <header class="job-header">
-      <img [src]="job.companyLogo" alt="{{ job.companyName }} logo" class="company-logo">
-      <h1>{{ job.jobTitle }}</h1>
-      <h2>{{ job.companyName }}</h2>
-    </header>
+  <div class="back-button-container">
+    <button class="back-button" (click)="goBack()">← Back</button>
+  </div>
   
-    <section class="job-info">
-      <p><strong>Industry:</strong> {{ job.jobIndustry }}</p>
-      <p><strong>Type:</strong> {{ job.jobType }}</p>
-      <p><strong>Location:</strong> {{ job.jobGeo }}</p>
-      <p><strong>Seniority:</strong> {{ job.jobLevel }}</p>
-      <p><strong>Published on:</strong> {{ job.pubDate | date }}</p>
-    </section>
-  
-    <section class="job-description">
-      <div [innerHTML]="job.jobDescription"></div>
-    </section>
-  
-    <footer>
-      <a [href]="job.url" target="_blank" rel="noopener noreferrer">Apply Now</a>
-    </footer>
+  <header class="job-header">
+    <img [src]="job.companyLogo" alt="{{ job.companyName }} logo" class="company-logo">
+    <h1>{{ job.jobTitle }}</h1>
+    <h2>{{ job.companyName }}</h2>
+  </header>
+
+  <section class="job-info">
+    <p><strong>Industry:</strong> {{ job.jobIndustry }}</p>
+    <p><strong>Type:</strong> {{ job.jobType }}</p>
+    <p><strong>Location:</strong> {{ job.jobGeo }}</p>
+    <p><strong>Seniority:</strong> {{ job.jobLevel }}</p>
+    <p><strong>Published on:</strong> {{ job.pubDate | date }}</p>
+  </section>
+
+  <section class="job-description">
+    <div [innerHTML]="job.jobDescription"></div>
+  </section>
+
+  <footer class="job-actions">
+    <button class="save-button" (click)="saveJob()">Save Job</button>
+    <button class="apply-button" (click)="openApplyPopup()">Apply Now</button>
+  </footer>
+</div>
+
+<!-- Apply Confirmation Popup -->
+<div class="popup-overlay" *ngIf="showApplyPopup">
+<div class="popup-container">
+  <h2>Application Status</h2>
+  <p>Did you apply for this job?</p>
+  <div class="popup-actions">
+    <button class="no-button" (click)="handleApplyResponse(false)">No</button>
+    <button class="yes-button" (click)="handleApplyResponse(true)">Yes</button>
+  </div>
+</div>
 </div>
 
 <div *ngIf="!job">

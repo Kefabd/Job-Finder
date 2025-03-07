@@ -1,76 +1,97 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Common container style */
+.container {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Home Page Container */
 .page-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 20px;
-  background-color: #f8fafc;
+  background: #f8fafc; /* overall background can remain light */
+  animation: fadeInUp 0.6s ease-out;
 }
 
 /* Navigation Styles */
 .navbar {
-  background-color: white;
+  @extend .container;
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 2rem;
+  background: #ffffff;
+}
 
-  .nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .site-title {
-    font-size: 1.8rem;
-    color: #1a365d;
-    margin: 0;
-  }
+.site-title {
+  font-size: 1.8rem;
+  color: #1a365d;
+  margin: 0;
+}
 
-  .user-controls {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.user-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-    .user-email {
-      color: #4a5568;
-      font-weight: 500;
-    }
+.user-email {
+  color: #4a5568;
+  font-weight: 500;
+}
 
-    .logout-btn {
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+.logout-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
 
-      &:hover {
-        background: #dc2626;
-      }
-    }
-  }
+.logout-btn:hover {
+  background: #dc2626;
 }
 
 /* Welcome Section */
 .welcome-section {
+  @extend .container;
   background: #ebf8ff;
   padding: 2rem;
-  border-radius: 10px;
   margin-bottom: 2rem;
   text-align: center;
-
-  h2 {
-    color: #2c5282;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .welcome-message {
-    color: #4a5568;
-    margin: 0;
-  }
 }
 
-/* Jobs Grid */
+.welcome-section h2 {
+  color: #2c5282;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-message {
+  color: #4a5568;
+}
+
+/* Jobs Grid & Cards */
 .jobs-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -78,165 +99,81 @@
   margin-bottom: 2rem;
 }
 
-/* Job Card */
 .job-card {
-  background: white;
-  border-radius: 12px;
+  @extend .container;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
+}
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
+.job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .job-header {
-    margin-bottom: 1rem;
+.job-header .job-title {
+  font-size: 1.3rem;
+  color: #1a365d;
+  margin-bottom: 0.5rem;
+}
 
-    .job-title {
-      font-size: 1.3rem;
-      color: #1a365d;
-      margin: 0 0 0.5rem 0;
-    }
+.company-info {
+  display: flex;
+  gap: 1rem;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
 
-    .company-info {
-      display: flex;
-      gap: 1rem;
-      color: #4a5568;
-      font-size: 0.9rem;
-    }
-  }
+.job-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
 
-  .job-types {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+.job-type-tag {
+  background: #edf2f7;
+  color: #4a5568;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+}
 
-    .job-type-tag {
-      background: #edf2f7;
-      color: #4a5568;
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.875rem;
-    }
-  }
+.job-details .industry-section {
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
 
-  .job-details {
-    flex-grow: 1;
+.job-details .job-description {
+  color: #718096;
+  line-height: 1.6;
+}
 
-    .industry-section {
-      margin-bottom: 1rem;
-      color: #4a5568;
-    }
+.card-footer {
+  margin-top: 1.5rem;
+}
 
-    .job-description {
-      color: #718096;
-      line-height: 1.6;
-    }
-  }
+.view-job-btn {
+  display: inline-block;
+  width: 100%;
+  background: #4299e1;
+  color: white;
+  text-align: center;
+  padding: 0.75rem 0;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
 
-  .card-footer {
-    margin-top: 1.5rem;
-
-    .view-job-btn {
-      display: inline-block;
-      width: 100%;
-      background: #4299e1;
-      color: white;
-      text-align: center;
-      padding: 0.75rem 0;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s ease;
-
-      &:hover {
-        background: #3182ce;
-      }
-    }
-  }
+.view-job-btn:hover {
+  background: #3182ce;
 }
 
 /* No Jobs Message */
 .no-jobs-message {
+  @extend .container;
   text-align: center;
   padding: 2rem;
-  color: #4a5568;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .page-container {
-    padding: 10px;
-  }
-
-  .navbar .nav-content {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-
-    .user-controls {
-      flex-direction: column;
-      width: 100%;
-
-      .logout-btn {
-        width: 100%;
-      }
-    }
-  }
-
-  .jobs-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  .page-container {
-    background-color: #1a202c;
-  }
-
-  .navbar,
-  .job-card,
-  .no-jobs-message {
-    background: #2d3748;
-  }
-
-  .navbar .site-title {
-    color: #f7fafc;
-  }
-
-  .welcome-section {
-    background: #2c5282;
-
-    h2 {
-      color: #ebf8ff;
-    }
-
-    .welcome-message {
-      color: #e2e8f0;
-    }
-  }
-
-  .job-card {
-    .job-title {
-      color: #e2e8f0;
-    }
-
-    .job-type-tag {
-      background: #2c5282;
-      color: #ebf8ff;
-    }
-
-    .job-description {
-      color: #a0aec0;
-    }
-  }
 }

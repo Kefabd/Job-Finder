@@ -15,7 +15,11 @@
     <button type="submit" [disabled]="loginForm.invalid">Login</button>
   </form>
   <hr />
-  <button (click)="signInWithGoogle()">Sign in with Google</button>
+  <button class="google-signin-btn" (click)="signInWithGoogle()">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" />
+
+    Sign in with Google
+  </button>
   <p>
     Don't have an account? <a routerLink="/register">Register here</a>
   </p>

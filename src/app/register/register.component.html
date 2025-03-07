@@ -1,40 +1,89 @@
 <div class="register-container">
-  <h2>Register</h2>
-  <form [formGroup]="registerForm" (ngSubmit)="register()">
-    <div>
-      <label for="firstName">First Name</label>
-      <input id="firstName" type="text" formControlName="firstName" placeholder="Enter your first name" />
+ <h2>Create Account</h2>
+   <p class="subtitle">Join us to find your dream job</p>
+  
+   <form [formGroup]="registerForm" (ngSubmit)="register()">
+   <div class="name-group">
+    <div class="form-field">
+   <label for="firstName">First Name</label>
+   <input
+    id="firstName"
+    type="text"
+    formControlName="firstName"
+    placeholder="Enter your first name"
+   />
     </div>
-    <div>
-      <label for="lastName">Last Name</label>
-      <input id="lastName" type="text" formControlName="lastName" placeholder="Enter your last name" />
+   
+    <div class="form-field">
+   <label for="lastName">Last Name</label>
+   <input
+    id="lastName"
+    type="text"
+    formControlName="lastName"
+    placeholder="Enter your last name"
+   />
     </div>
-    <div>
-      <label for="reg-email">Email</label>
-      <input id="reg-email" type="email" formControlName="email" placeholder="Enter your email" />
+   </div>
+  
+  
+   <div class="form-field">
+    <label for="reg-email">Email Address</label>
+    <input
+   id="reg-email"
+   type="email"
+   formControlName="email"
+   placeholder="Enter your email"
+    />
+   </div>
+  
+  
+   <div class="form-field">
+    <label for="reg-password">Password</label>
+    <div class="password-input">
+   <input
+    id="reg-password"
+    type="password"
+    formControlName="password"
+    placeholder="Create a strong password"
+   />
+   <i class="password-toggle">👁️</i>
     </div>
-    <div>
-      <label for="reg-password">Password</label>
-      <input id="reg-password" type="password" formControlName="password" placeholder="Enter your password" />
+   </div>
+  
+  
+   <div class="form-field">
+    <label for="confirmPassword">Confirm Password</label>
+    <input
+   id="confirmPassword"
+   type="password"
+   formControlName="confirmPassword"
+   placeholder="Confirm your password"
+    />
+    <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
+   class="error-message">
+   Passwords do not match.
     </div>
-    <div>
-      <label for="confirmPassword">Confirm Password</label>
-      <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Confirm your password" />
-      <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="error">
-        Passwords do not match.
-      </div>
-    </div>
-    <div *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
-    </div>
-    <div *ngIf="successMessage" class="success">
-      {{ successMessage }}
-    </div>
-    <button type="submit" [disabled]="registerForm.invalid">Register</button>
-  </form>
-  <hr />
-  <button (click)="registerWithGoogle()">Register with Google</button>
-  <p>
-    Already have an account? <a routerLink="/login">Login here</a>
-  </p>
-</div>
+   </div>
+  
+  
+   <div *ngIf="errorMessage" class="error-alert">
+    {{ errorMessage }}
+   </div>
+  
+  
+   <div *ngIf="successMessage" class="success-alert">
+    {{ successMessage }}
+   </div>
+  
+  
+   <button type="submit" [disabled]="registerForm.invalid">
+    Create Account
+   </button>
+   </form>
+  
+  
+   <p class="login-link">
+   Already have an account? <a routerLink="/login">Sign in</a>
+   </p>
+  
+  </div>

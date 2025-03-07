@@ -32,7 +32,7 @@ export class LoginComponent {
       console.log('Logged in user:', userCredential.user);
       sessionStorage.setItem('user', JSON.stringify(email))
       // Redirect to the protected route
-      this.router.navigate(['/app']);
+      this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Login error:', error);
       this.errorMessage = error.message;
@@ -62,8 +62,8 @@ export class LoginComponent {
       console.log('Google sign in success:', result.user);
       // Optionally, check for user record in Firestore here.
       // this.router.navigate(['/app']);
-      console.log('Redirecting to /app...');
-      this.router.navigate(['/app']).then(success => {
+      console.log('Redirecting to /home...');
+      this.router.navigate(['/home']).then(success => {
         console.log('Navigation result:', success);
       });
 

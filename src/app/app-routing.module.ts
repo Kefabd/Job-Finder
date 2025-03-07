@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth.guard';
 import { AppComponent } from './app.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'app', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'job-details', component: JobDetailsComponent},
   { path: '**', redirectTo: '/login' }
 ];
 

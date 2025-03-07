@@ -46,6 +46,11 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  // In home.component.ts
+  viewJobDetails(job: Job) {
+    this.router.navigate(['/job-details'], { state: { job } });
+  }
+
   async logout() {
     await signOut(this.auth);
     this.router.navigate(['/login']);

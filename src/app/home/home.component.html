@@ -43,13 +43,11 @@
       </div>
 
       <div class="card-footer">
-        <a [href]="job.url" 
-           target="_blank" 
-           class="view-job-btn"
-           rel="noopener noreferrer">
+        <button (click)="viewJobDetails(job)" class="view-job-btn">
           View Job Details
-        </a>
+        </button>
       </div>
+      
     </article>
   </main>
 

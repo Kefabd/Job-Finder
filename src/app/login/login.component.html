@@ -1,26 +1,46 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div>
-      <label for="email">Email</label>
-      <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
-    </div>
-    <div *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
-    </div>
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
-  <hr />
-  <button class="google-signin-btn" (click)="signInWithGoogle()">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" />
+<div class="login-wrapper">
+  <!-- Left Column: Animated Avatar -->
+  <div class="login-image">
+    <lottie-player src="assets/user-interface-research.json" background="transparent" speed="1" loop autoplay
+      style="width: 100%; height: 100%;">
+    </lottie-player>
+  </div>
 
-    Sign in with Google
-  </button>
-  <p>
-    Don't have an account? <a routerLink="/register">Register here</a>
-  </p>
+  <!-- Right Column: Login Form -->
+  <div class="login-container">
+    <!-- Logo Section -->
+    <div class="login-logo">
+      <img src="assets/your-logo.png" alt="Your Logo" />
+    </div>
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+      </div>
+      <!-- Forgot Password Link -->
+      <!-- <p class="forgot-password">
+        <a (click)="forgotPassword()">Forgot password?</a>
+      </p> -->
+      <p class="forgot-password">
+        <a routerLink="/forgot-password">Forgot password?</a>
+      </p>
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+    <hr />
+    <button class="google-signin-btn" (click)="signInWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" />
+      Sign in / Sign up with Google
+    </button>
+    <p>
+      Don't have an account? <a routerLink="/register">Register here</a>
+    </p>
+  </div>
 </div>

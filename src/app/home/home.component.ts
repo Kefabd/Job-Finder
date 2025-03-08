@@ -1,53 +1,64 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Auth, getAuth, signOut } from '@angular/fire/auth';
-import { ApiService } from '../services/api.service';
-import { Job } from '../models';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  title = 'My Job Finder';
-  jobs: Job[] = [];
-  userEmail: string | null = null;
+  jobs: any[] = [];
+  title: string = 'Job Search App'; // Added missing property
+  userEmail: string | null = null; // Added missing property
 
-  private auth: Auth = inject(Auth);
-  private router: Router = inject(Router);
+  constructor(private api: ApiService, private router: Router) {
+    // Get user email from localStorage or another authentication service
+    this.userEmail = localStorage.getItem('userEmail'); // Example implementation
+  }
 
-  constructor(private api: ApiService) {}
-
-  ngOnInit() {
-    console.log('HomeComponent (JobFinderComponent) initialized');
-
-    // Use Firebase Auth to check for the current user
-    const currentUser = this.auth.currentUser;
-    if (currentUser && currentUser.email) {
-      this.userEmail = currentUser.email;
-    } else {
-      // If no user is found, redirect to login
-      console.error('No authenticated user found.');
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    // Fetch jobs from your API
+  ngOnInit(): void {
     this.api.getJobs(9, 'usa', 'data-science').subscribe(
-
       (response) => {
         console.log('API Response:', response);
         this.jobs = response.jobs;
+  
+        // Smoothly restore the scroll position if needed
+        if (sessionStorage.getItem('restoreScroll') === 'true') {
+          const scrollPosition = sessionStorage.getItem('scrollPosition');
+          if (scrollPosition) {
+            setTimeout(() => {
+              window.scrollTo({ top: parseInt(scrollPosition, 10), behavior: 'smooth' });
+            }, 100); // Small delay to ensure smooth scrolling after rendering
+          }
+          // Clean up sessionStorage to prevent unwanted restoration on refresh
+          sessionStorage.removeItem('restoreScroll');
+          sessionStorage.removeItem('scrollPosition');
+        }
       },
       (error) => {
         console.error('API Error:', error);
       }
     );
   }
-
-  async logout() {
-    await signOut(this.auth);
-    this.router.navigate(['/login']);
+  
+  viewJobDetails(job: any): void {
+    // Save the current scroll position and set the restoration flag
+    sessionStorage.setItem('scrollPosition', window.scrollY.toString());
+    sessionStorage.setItem('restoreScroll', 'true');
+  
+    // Navigate to job details
+    this.router.navigate(['/job-details'], { state: { job } }).then(() => {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100); // Ensure the page is loaded before scrolling
+    });
+  }
+  
+  // Added missing method
+  logout(): void {
+    // Implement logout logic
+    localStorage.removeItem('userEmail'); // Example implementation
+    this.router.navigate(['/login']); // Navigate to login page
   }
 }

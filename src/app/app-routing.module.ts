@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth.guard';
 import { AppComponent } from './app.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 
@@ -13,13 +15,15 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'job-details', component: JobDetailsComponent},
   { path: 'myOffers', component: MyOffersComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

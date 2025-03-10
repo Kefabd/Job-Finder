@@ -12,6 +12,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FormsModule } from '@angular/forms';
+import { SearchbarComponent } from './home/searchbar/searchbar.component';
+import { JobCardComponent } from './home/job-card/job-card.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +25,17 @@ import { NavbarComponent } from './navbar/navbar.component';
     RegisterComponent,
     HomeComponent,
     MyOffersComponent,
-    NavbarComponent
+    NavbarComponent,
+    SearchbarComponent,
+    JobCardComponent,
+    ForgotPasswordComponent,
+    JobDetailsComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     provideFirebaseApp(() =>
       initializeApp({

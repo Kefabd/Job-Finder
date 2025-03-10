@@ -1,0 +1,31 @@
+input::placeholder {
+    color: gray;
+  }
+
+/* Between 1190px and 1303px */
+@media (min-width: 1190px) and (max-width: 1303px) {
+  .find-job-button {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 200px !important; /* Center button */
+  }
+}
+
+/* Between 853px and 1189px */
+@media (min-width: 853px) and (max-width: 1189px) {
+  .salary-range, .find-job-button {
+    flex: 1 !important;
+    min-width: 168px !important;
+     /* Salary and Button should take equal space */
+  }
+  .salary-range select{
+    width: 100% !important;
+  }
+}
+
+/* Between 767px and 852px */
+@media (min-width: 767px) and (max-width: 852px) {
+  .salary-range, .job-type, .find-job-button {
+    flex: 1 !important; /* Job Type, Salary, and Button should take equal space */
+  }
+}

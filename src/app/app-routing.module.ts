@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 
 
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'job-details', component: JobDetailsComponent},
   { path: 'myOffers', component: MyOffersComponent, canActivate: [AuthGuard] },
+  { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/login' }
 ];
 

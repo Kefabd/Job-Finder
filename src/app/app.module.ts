@@ -17,6 +17,9 @@ import { SearchbarComponent } from './home/searchbar/searchbar.component';
 import { JobCardComponent } from './home/job-card/job-card.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     JobCardComponent,
     ForgotPasswordComponent,
     JobDetailsComponent,
+    UserFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     ),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -44,6 +44,7 @@ export class LoginComponent {
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google sign in success:', result.user);
       console.log('Redirecting to /app...');
+      sessionStorage.setItem('user', String(result.user.displayName));
       this.router.navigate(['/app']).then(success => {
         console.log('Navigation result:', success);
       });

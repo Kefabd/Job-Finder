@@ -12,6 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     HomeComponent,
     JobDetailsComponent,
     ForgotPasswordComponent,
+    UserFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +43,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
   providers: [],
   bootstrap: [AppComponent],

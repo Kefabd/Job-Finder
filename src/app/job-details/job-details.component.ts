@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Job } from '../models';
+import { Firestore, doc, getDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-job-details',
@@ -12,7 +14,7 @@ export class JobDetailsComponent implements OnInit {
   job: Job | null = null;
   showApplyPopup: boolean = false;
   
-  constructor(private router: Router, private location: Location) {}
+  constructor(private router: Router, private location: Location, private firestore: Firestore) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
@@ -27,21 +29,33 @@ export class JobDetailsComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  async saveJob(): Promise<void> {
+    if (!this.job) return;
   
-  saveJob(): void {
-    // Get existing saved jobs from localStorage or initialize empty array
-    const savedJobs = JSON.parse(localStorage.getItem('savedJobs') || '[]');
-    
-    // Check if job is already saved
-    const isJobSaved = savedJobs.some((savedJob: Job) => savedJob.url === this.job?.url);
-    
-    if (!isJobSaved && this.job) {
-      // Add current job to saved jobs
-      savedJobs.push(this.job);
-      localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
-      alert('Job saved successfully!');
-    } else {
-      alert('This job is already saved.');
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) {
+      alert('You must be logged in to save jobs.');
+      return;
+    }
+  
+    try {
+      const userRef = doc(this.firestore, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+  
+      if (userSnap.exists()) {
+        // Update the user's document to add the job ID to the savedJobs array
+        await updateDoc(userRef, {
+          savedJobs: arrayUnion(this.job.id) // Add job ID without duplicates
+        });
+        alert('Job saved successfully!');
+      } else {
+        alert('User document not found.');
+      }
+    } catch (error) {
+      console.error('Error saving job:', error);
+      alert('Failed to save the job.');
     }
   }
   
@@ -55,17 +69,29 @@ export class JobDetailsComponent implements OnInit {
     this.showApplyPopup = true;
   }
   
-  handleApplyResponse(didApply: boolean): void {
+  async handleApplyResponse(didApply: boolean): Promise<void> {
     if (didApply && this.job) {
-      // Track that the user applied for this job
-      const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs') || '[]');
-      
-      if (!appliedJobs.some((job: Job) => job.url === this.job?.url)) {
-        appliedJobs.push(this.job);
-        localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) {
+        alert('You must be logged in to track applied jobs.');
+        return;
       }
-      
-      alert('Great! We\'ve marked this job as applied.');
+
+      try {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        
+        // Update the user's document to add the job ID to the appliedJobs array
+        await updateDoc(userRef, {
+          appliedJobs: arrayUnion(this.job.id) // Add job ID without duplicates
+        });
+
+        alert('Great! We\'ve marked this job as applied.');
+      } catch (error) {
+        console.error('Error marking job as applied:', error);
+        alert('Failed to mark the job as applied.');
+      }
     }
     
     // Close the popup

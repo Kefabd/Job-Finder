@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router) {
     // Get user email from localStorage or another authentication service
-    this.userEmail = localStorage.getItem('userEmail'); // Example implementation
+    this.userEmail = sessionStorage.getItem('user'); // Example implementation
   }
 
   ngOnInit(): void {
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
   // Added missing method
   logout(): void {
     // Implement logout logic
-    localStorage.removeItem('userEmail'); // Example implementation
+    sessionStorage.removeItem('user'); // Example implementation
     this.router.navigate(['/login']); // Navigate to login page
   }
 }

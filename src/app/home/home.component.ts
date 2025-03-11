@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-home',
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
   sortJobs(event: Event) {
     const target = event.target as HTMLSelectElement;
     const criteria = target.value;
@@ -71,7 +73,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-}
 
   
   // Added missing method

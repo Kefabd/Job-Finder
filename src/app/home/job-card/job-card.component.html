@@ -20,7 +20,7 @@
   
     <div class="footer">
       <span>{{ job.pubDate | date: 'd MMMM yyyy' }}</span>
-      <a [href]="job.url" target="_blank">View Job</a>
+      <a [routerLink]="['/job-details']" [state]="{ job: job }">View Job</a>
     </div>
 </div>
   

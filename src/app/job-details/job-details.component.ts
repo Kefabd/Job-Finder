@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Job } from '../models';
 import { Firestore, doc, getDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-job-details',
@@ -13,6 +13,8 @@ import { getAuth } from 'firebase/auth';
 export class JobDetailsComponent implements OnInit {
   job: Job | null = null;
   showApplyPopup: boolean = false;
+  isJobSaved: boolean = false;
+  isJobApplied: boolean = false;
   
   constructor(private router: Router, private location: Location, private firestore: Firestore) {}
 
@@ -23,12 +25,15 @@ export class JobDetailsComponent implements OnInit {
     // If no job was passed, redirect back to home
     if (!this.job) {
       this.router.navigate(['/']);
+    }else{
+      this.checkJobStatus();
     }
   }
 
   goBack(): void {
     this.location.back();
   }
+
 
   async saveJob(): Promise<void> {
     if (!this.job) return;
@@ -49,7 +54,8 @@ export class JobDetailsComponent implements OnInit {
         await updateDoc(userRef, {
           savedJobs: arrayUnion(this.job.id) // Add job ID without duplicates
         });
-        alert('Job saved successfully!');
+        this.isJobSaved = true;
+        console.log('Job saved successfully!');
       } else {
         alert('User document not found.');
       }
@@ -64,9 +70,33 @@ export class JobDetailsComponent implements OnInit {
     if (this.job) {
       window.open(this.job.url, '_blank');
     }
-    
+
     // Then show the popup asking if they applied
     this.showApplyPopup = true;
+  }
+
+   // Check if the current job is saved or applied by the current user
+   async checkJobStatus(): Promise<void> {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) {
+      console.error('User not logged in');
+      return;
+    }
+
+    const userRef = doc(this.firestore, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      if (userData) {
+        // Check if the job ID is in the saved or applied jobs
+        this.isJobSaved = userData['savedJobs']?.includes(this.job?.id);
+        this.isJobApplied = userData['appliedJobs']?.includes(this.job?.id);
+      }
+    } else {
+      console.error('User document not found');
+    }
   }
   
   async handleApplyResponse(didApply: boolean): Promise<void> {
@@ -86,8 +116,9 @@ export class JobDetailsComponent implements OnInit {
         await updateDoc(userRef, {
           appliedJobs: arrayUnion(this.job.id) // Add job ID without duplicates
         });
+        this.isJobApplied = true;
 
-        alert('Great! We\'ve marked this job as applied.');
+        console.log('Great! We\'ve marked this job as applied.');
       } catch (error) {
         console.error('Error marking job as applied:', error);
         alert('Failed to mark the job as applied.');

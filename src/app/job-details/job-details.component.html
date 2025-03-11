@@ -23,8 +23,8 @@
   </section>
 
   <footer class="job-actions">
-    <button class="save-button" (click)="saveJob()">Save Job</button>
-    <button class="apply-button" (click)="openApplyPopup()">Apply Now</button>
+    <button *ngIf="!isJobSaved" class="save-button" (click)="saveJob()">Save Job</button>
+    <button *ngIf="!isJobApplied" class="apply-button" (click)="openApplyPopup()">Apply Now</button>
   </footer>
 </div>
 <!-- Apply Confirmation Popup -->

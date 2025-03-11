@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-user-form',

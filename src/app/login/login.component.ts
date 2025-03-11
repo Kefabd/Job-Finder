@@ -39,7 +39,8 @@ export class LoginComponent {
   }
 
   async signInWithGoogle() {
-    try {
+    try 
+    {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google sign in success:', result.user);
@@ -47,30 +48,17 @@ export class LoginComponent {
       console.log('Redirecting to /home...');
       this.router.navigate(['/home']).then(success => {
 
-      console.log('Redirecting to /app...');
-      sessionStorage.setItem('user', String(result.user.displayName));
-      this.router.navigate(['/app']).then(success => {
+        console.log('Redirecting to /app...');
+        sessionStorage.setItem('user', String(result.user.displayName));
+        this.router.navigate(['/home']).then(success => {
 
-       console.log('Navigation result:', success);
-      });
-    } catch (error: any) {
+          console.log('Navigation result:', success);
+        });
+      })
+      
+    }catch (error: any) {
       console.error('Google sign in error:', error);
       this.errorMessage = error.message;
     }
   }
-
-  // async forgotPassword() {
-  //   const email = this.loginForm.get('email')?.value;
-  //   if (!email) {
-  //     this.errorMessage = 'Please enter your email address to reset your password.';
-  //     return;
-  //   }
-  //   try {
-  //     await sendPasswordResetEmail(this.auth, email);
-  //     alert('Password reset email sent! Please check your inbox.');
-  //   } catch (error: any) {
-  //     console.error('Forgot Password error:', error);
-  //     this.errorMessage = error.message;
-  //   }
-  // }
 }

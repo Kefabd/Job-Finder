@@ -15,10 +15,13 @@ export class NavbarComponent {
       this.currentRoute = this.router.url;
     });
   }
+
   private auth = inject(Auth);  // Inject Auth service
+  
   shouldShowNavbar(): boolean {
     return this.router.url !== '/login';  // Hide navbar on login page
   }
+
   handleLogout() {
     signOut(this.auth)  // Sign out the user
       .then(() => {

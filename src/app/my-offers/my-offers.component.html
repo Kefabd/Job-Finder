@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="tabs rounded-full">
+      <button (click)="toggleTab('saved')" class="rounded-full" [ngClass]="{ 'active': currentTab === 'saved', 'inactive': currentTab !== 'saved' }">Saved Jobs</button>
+      <button (click)="toggleTab('applied')" class="rounded-full" [ngClass]="{ 'active': currentTab === 'applied', 'inactive': currentTab !== 'applied' }">Applied Jobs</button>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="precard">
+        <div class="jobs-found"><h3 >Jobs Found: {{ jobs.length }}</h3></div>
+        <div class="sort-container">
+          <label for="sort">Sort by:</label>
+          <select id="sort" (change)="sortJobs($event)">
+            <option value="date">Date</option>
+            <option value="alphabetical">A-Z</option>
+          </select>      
+        </div>
+    
+      </div>
+    <!-- Jobs Grid Container -->
+    <div *ngIf="currentTab === 'saved'" class="jobs-list saved-jobs">
+        <!-- Display saved jobs here -->
+        <main class="jobs-container">
+            <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
+        </main>
+        <!-- No Jobs Found Message -->
+        <div class="no-jobs-message" *ngIf="jobs.length === 0">
+            <p>No jobs found matching your criteria.</p>
+        </div>
+    </div>
+    <div *ngIf="currentTab === 'applied'" class="jobs-list applied-jobs">
+        <!-- Display saved jobs here -->
+        <main class="jobs-container">
+            <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
+        </main>
+        <!-- No Jobs Found Message -->
+        <div class="no-jobs-message" *ngIf="jobs.length === 0">
+            <p>No jobs found matching your criteria.</p>
+        </div>
+    </div>
+</div>
+  

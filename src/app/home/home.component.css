@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -19,59 +21,80 @@
   animation: fadeInUp 0.6s ease-out;
 }
 
+
+/* Page Top*/
+.page-top{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2.5rem;
+  font-family: "Big Shoulders", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  margin-top: 2rem;
+}
+.page-container span{
+  color: rgb(37, 99, 235);
+  text-shadow: #718096  2px 2px 5px;
+}
+.precard{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+.jobs-found{
+  margin-top: 2rem;
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  flex: 1;
+  padding-left: 4px;
+}
+.jobs-found h3{
+  background:#ffffff;
+  padding: 8px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+.sort-container{
+  margin-top: 2rem;
+  background:#ffffff;
+  padding: 8px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+.sort-container label{
+  font-size: 1.2rem;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+
+@media(max-width: 500px) {
+  .jobs-found{
+      display: none;
+  }
+}
+
 /* Home Page Container */
 .page-container {
-  max-width: 1200px;
-  margin: 2rem auto;
+  /*max-width: 1200px;*/
+  margin: auto;
   padding: 20px;
   background: #f8fafc; /* overall background can remain light */
   animation: fadeInUp 0.6s ease-out;
 }
 
 /* Navigation Styles */
-.navbar {
-  @extend .container;
-  padding: 1rem;
-  margin-bottom: 2rem;
-  background: #ffffff;
-}
 
-.nav-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.site-title {
-  font-size: 1.8rem;
-  color: #1a365d;
-  margin: 0;
-}
-
-.user-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.user-email {
-  color: #4a5568;
-  font-weight: 500;
-}
-
-.logout-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.logout-btn:hover {
-  background: #dc2626;
-}
 
 /* Welcome Section */
 .welcome-section {
@@ -96,16 +119,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin: 2rem auto;
 }
 
 .job-card {
-  @extend .container;
-  padding: 1.5rem;
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height:max-content;
 }
 
 .job-card:hover {
@@ -176,4 +197,5 @@
   @extend .container;
   text-align: center;
   padding: 2rem;
+  min-height: 100vh;
 }

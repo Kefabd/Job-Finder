@@ -1,54 +1,26 @@
 <div class="page-container">
+  <!--Top Slogan-->
+  <div class="page-top">
+    <h1>Find Your Dream Job – <span>One Click Away!</span></h1>
+  </div>
   <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-content">
-      <h1 class="site-title">{{ title }}</h1>
-      <div class="user-controls">
-        <button (click)="logout()" class="logout-btn">Logout</button>
-      </div>
+  <app-searchbar (searchEvent)="onSearch($event)"></app-searchbar>
+  
+  <div class="precard">
+    <div class="jobs-found"><h3 >Jobs Found: {{ jobs.length }}</h3></div>
+    <div class="sort-container">
+      <label for="sort">Sort by:</label>
+      <select id="sort" (change)="sortJobs($event)">
+        <option value="date">Date</option>
+        <option value="alphabetical">A-Z</option>
+      </select>      
     </div>
-  </nav>
 
-  <!-- Welcome Section -->
-  <header class="welcome-section" *ngIf="userEmail">
-    <div class="welcome-content">
-      <h2>Welcome <span class="user-email" *ngIf="userEmail">{{ userEmail }}</span></h2>
-      <p class="welcome-message">Find your next opportunity</p>
-    </div>
-  </header>
-
+  </div>
   <!-- Jobs Grid Container -->
   <main class="jobs-container">
     <!-- Job Cards -->
-    <article class="job-card" *ngFor="let job of jobs">
-      <div class="job-header">
-        <h2 class="job-title">{{ job.jobTitle }}</h2>
-        <div class="company-info">
-          <span class="company-name">{{ job.companyName }}</span>
-          <span class="location">{{ job.jobGeo }}</span>
-        </div>
-      </div>
-
-      <div class="job-types">
-        <span class="job-type-tag" *ngFor="let type of job.jobType">{{ type }}</span>
-      </div>
-
-      <div class="job-details">
-        <div class="industry-section">
-          <strong>Industry:</strong>
-          <span class="industry-tags">{{ job.jobIndustry.join(', ') }}</span>
-        </div>
-        
-        <p class="job-description">{{ job.jobExcerpt }}</p>
-      </div>
-
-      <div class="card-footer">
-        <button (click)="viewJobDetails(job)" class="view-job-btn">
-          View Job Details
-        </button>
-      </div>
-      
-    </article>
+      <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
   </main>
 
   <!-- No Jobs Found Message -->

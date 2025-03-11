@@ -10,8 +10,13 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
-import { JobDetailsComponent } from './job-details/job-details.component';
+import { MyOffersComponent } from './my-offers/my-offers.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FormsModule } from '@angular/forms';
+import { SearchbarComponent } from './home/searchbar/searchbar.component';
+import { JobCardComponent } from './home/job-card/job-card.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 
@@ -22,14 +27,19 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    JobDetailsComponent,
+    MyOffersComponent,
+    NavbarComponent,
+    SearchbarComponent,
+    JobCardComponent,
     ForgotPasswordComponent,
+    JobDetailsComponent,
     UserFormComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     provideFirebaseApp(() =>
       initializeApp({

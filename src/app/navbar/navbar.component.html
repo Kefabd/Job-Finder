@@ -1,0 +1,48 @@
+<div class="w-24 lg:w-64 h-screen bg-white shadow-lg p-6 flex flex-col justify-between fixed top-0 left-0 z-10" *ngIf="shouldShowNavbar()">
+    <div>
+        <!-- User Info -->
+        <div class="flex items-center space-x-3 mb-6">
+            <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Profile"
+                class="w-12 h-12 rounded-full"
+            />
+            <div class="hidden lg:block">
+                <h4 class="text-gray-800 font-semibold">Michael Smith</h4>
+                <p class="text-gray-500 text-sm">michaelsmith12</p>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="mt-6 bg-white text-black">
+            
+            <a routerLink="/home" routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }" class="flex items-center justify-between text-gray-700 py-3 px-2 rounded-md">
+                <div class="flex items-center space-x-3">
+                    <span class="material-icons text-gray-600">home</span>
+                    <span class="hidden lg:inline">Home</span> <!-- Show text only on lg screens -->
+                </div>
+            </a>
+            
+            <a routerLink="/myOffers" routerLinkActive="bg-gray-100" class="flex items-center justify-between text-gray-700 py-3 px-2 rounded-md">
+                <div class="flex items-center space-x-3">
+                    <span class="material-icons text-gray-600">computer</span>
+                    <span class="hidden lg:inline">My Jobs</span> <!-- Show text only on lg screens -->
+                </div>
+                <span class="text-sm bg-red-500 text-white px-2 py-0.5 rounded-full">2</span>
+            </a>
+
+            <a routerLink="/settings" routerLinkActive="bg-gray-100" class="flex items-center justify-between text-gray-700 py-3 px-2 rounded-md">
+                <div class="flex items-center space-x-3">
+                    <span class="material-icons text-gray-600">settings</span>
+                    <span class="hidden lg:inline">Settings</span> <!-- Show text only on lg screens -->
+                </div>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Logout -->
+    <a href="#" (click)="handleLogout()" class="flex items-center space-x-3 text-gray-600 py-3 px-2 rounded-md hover:bg-gray-100">
+        <span class="material-icons">logout</span>
+        <span class="hidden lg:inline">Logout</span> <!-- Show text only on lg screens -->
+    </a>
+</div>

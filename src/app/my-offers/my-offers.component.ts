@@ -3,21 +3,19 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-my-offers',
+  templateUrl: './my-offers.component.html',
+  styleUrl: './my-offers.component.css'
 })
-export class HomeComponent implements OnInit {
+export class MyOffersComponent {
+  currentTab = 'saved'; // Default to 'saved'
   jobs: any[] = [];
-  title: string = 'Job Search App';
-  userEmail: string | null = null;
-
-  constructor(private api: ApiService, private router: Router) {
-    // Get user email from localStorage or another authentication service
-    this.userEmail = localStorage.getItem('userEmail');
-    this.userEmail = sessionStorage.getItem('user'); // Example implementation
+  toggleTab(tab: string): void {
+    this.currentTab = tab;
   }
-
+  constructor(private api: ApiService, private router: Router) {
+    
+  }
   ngOnInit(): void {
     this.loadJobs(); // Initial load of jobs
   }
@@ -53,32 +51,4 @@ export class HomeComponent implements OnInit {
     }
   }
   
-  
-
-  // Handle the search event from the search bar component
-  onSearch(searchData: any): void {
-    this.loadJobs(searchData.jobTitles, searchData.location.toLowerCase(), searchData.jobType, searchData.salaryRange);
-  }
-  
-  viewJobDetails(job: any): void {
-    sessionStorage.setItem('scrollPosition', window.scrollY.toString());
-    sessionStorage.setItem('restoreScroll', 'true');
-
-    this.router.navigate(['/job-details'], { state: { job } }).then(() => {
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
-    });
-  }
-
 }
-
-  
-  // Added missing method
-  logout(): void {
-    // Implement logout logic
-    sessionStorage.removeItem('user'); // Example implementation
-    this.router.navigate(['/login']); // Navigate to login page
-  }
-}
-

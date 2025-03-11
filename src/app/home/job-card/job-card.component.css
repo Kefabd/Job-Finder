@@ -1,0 +1,75 @@
+.job-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    max-width: 400px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .location {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .details {
+    margin: 10px 0;
+  }
+  
+  .badge {
+    background: #eee;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+  
+  .salary {
+    font-weight: bold;
+    color: green;
+  }
+  
+  .excerpt {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .tags {
+    margin: 10px 0;
+  }
+  
+  .tag {
+    background: #eee;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .footer a {
+    text-decoration: none;
+    color: rgb(37, 99, 235);
+    font-weight: bold;
+  }
+  

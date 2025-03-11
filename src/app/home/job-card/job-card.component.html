@@ -1,0 +1,26 @@
+<div class="job-card">
+    <div class="header">
+      <img [src]="job.companyLogo" alt="Company Logo" class="logo" />
+      <div>
+        <h3>{{ job.jobTitle }}</h3>
+        <span class="location">{{ job.jobGeo }}</span>
+      </div>
+    </div>
+  
+    <div class="details">
+      <span class="badge rounded-full">{{ job.jobLevel }}</span>
+      <span class="badge rounded-full">{{ job.jobType.join(', ') }}</span>
+    </div>
+  
+    <p class="excerpt">{{ job.jobExcerpt | slice:0:150 }}...</p>
+  
+    <div class="tags">
+      <span *ngFor="let industry of job.jobIndustry" class="tag rounded-full">{{ getFormattedIndustry(industry) }}</span>
+    </div>
+  
+    <div class="footer">
+      <span>{{ job.pubDate | date: 'd MMMM yyyy' }}</span>
+      <a [href]="job.url" target="_blank">View Job</a>
+    </div>
+</div>
+  

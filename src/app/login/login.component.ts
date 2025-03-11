@@ -31,7 +31,7 @@ export class LoginComponent {
       console.log('Logged in user:', userCredential.user);
       sessionStorage.setItem('user', JSON.stringify(email));
       // Redirect to the protected route
-      this.router.navigate(['/app']);
+      this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Login error:', error);
       this.errorMessage = error.message;
@@ -43,10 +43,15 @@ export class LoginComponent {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google sign in success:', result.user);
+
+      console.log('Redirecting to /home...');
+      this.router.navigate(['/home']).then(success => {
+
       console.log('Redirecting to /app...');
       sessionStorage.setItem('user', String(result.user.displayName));
       this.router.navigate(['/app']).then(success => {
-        console.log('Navigation result:', success);
+
+       console.log('Navigation result:', success);
       });
     } catch (error: any) {
       console.error('Google sign in error:', error);

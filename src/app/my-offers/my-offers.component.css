@@ -1,0 +1,162 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background:rgb(248, 250, 252);
+    padding: 50px 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+    margin: auto;
+    background:#eee;
+    box-shadow:0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-weight:600;
+  }
+  .tabs button {
+      flex: 1;
+      padding: 15px 20px;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+
+  }
+  button.active {
+    background-color: white;
+    box-shadow:0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .separator{
+    height: 2px;
+    width:80%;
+    background:#fff;
+    margin: 60px auto;
+    border-radius: 10px;
+  }
+  /* Jobs Grid & Cards */
+.jobs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem auto;
+  }
+  
+  .job-card {
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height:max-content;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-header .job-title {
+    font-size: 1.3rem;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+  }
+  
+  .company-info {
+    display: flex;
+    gap: 1rem;
+    color: #4a5568;
+    font-size: 0.9rem;
+  }
+  
+  .job-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .job-type-tag {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+  }
+  
+  .job-details .industry-section {
+    margin-bottom: 1rem;
+    color: #4a5568;
+  }
+  
+  .job-details .job-description {
+    color: #718096;
+    line-height: 1.6;
+  }
+  
+  .card-footer {
+    margin-top: 1.5rem;
+  }
+  
+  .view-job-btn {
+    display: inline-block;
+    width: 100%;
+    background: #4299e1;
+    color: white;
+    text-align: center;
+    padding: 0.75rem 0;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  
+  .view-job-btn:hover {
+    background: #3182ce;
+  }
+  
+  /* No Jobs Message */
+  .no-jobs-message {
+    @extend .container;
+    text-align: center;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  .precard{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    padding: auto 20px;
+  }
+  @media(max-width: 500px) {
+    .jobs-found{
+        display: none;
+    }
+  }
+  .jobs-found{
+    margin-top: 2rem;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    flex: 1;
+    padding-left: 4px;
+  }
+  .jobs-found h3{
+    background:#ffffff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+  }
+  
+  .sort-container{
+    margin-top: 2rem;
+    background:#ffffff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+  }
+  .sort-container label{
+    font-size: 1.2rem;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+  }

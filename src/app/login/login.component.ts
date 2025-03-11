@@ -44,9 +44,10 @@ export class LoginComponent {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google sign in success:', result.user);
-
+  
       console.log('Redirecting to /home...');
       this.router.navigate(['/home']).then(success => {
+<<<<<<< HEAD
 
         console.log('Redirecting to /app...');
         sessionStorage.setItem('user', String(result.user.displayName));
@@ -57,8 +58,22 @@ export class LoginComponent {
       })
       
     }catch (error: any) {
+=======
+        console.log('Redirecting to /app...');
+        sessionStorage.setItem('user', String(result.user.displayName));
+        this.router.navigate(['/home']).then(success => {
+          console.log('Navigation result:', success);
+        });
+      });
+    } catch (error: any) {
+>>>>>>> 30cda124000b9d343a1d53c92b3fcace8ebaba12
       console.error('Google sign in error:', error);
       this.errorMessage = error.message;
     }
   }
+<<<<<<< HEAD
 }
+=======
+  
+}
+>>>>>>> 30cda124000b9d343a1d53c92b3fcace8ebaba12

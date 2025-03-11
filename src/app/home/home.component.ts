@@ -73,7 +73,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   
   // Added missing method
   logout(): void {
@@ -82,4 +81,3 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']); // Navigate to login page
   }
 }
-

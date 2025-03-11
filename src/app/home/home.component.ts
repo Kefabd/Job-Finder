@@ -72,13 +72,3 @@ export class HomeComponent implements OnInit {
   }
 
 }
-
-  
-  // Added missing method
-  logout(): void {
-    // Implement logout logic
-    sessionStorage.removeItem('user'); // Example implementation
-    this.router.navigate(['/login']); // Navigate to login page
-  }
-}
-

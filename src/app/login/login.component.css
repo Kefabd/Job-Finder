@@ -1,23 +1,26 @@
-/* Parent wrapper */
-
+/* Parent wrapper: occupies at least the full height of the window */
 .login-wrapper {
   display: flex;
   flex-direction: column;
   max-width: 800px;
   width: 100%;
-  margin: 2rem auto;
+  margin: auto;
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  height: 100%;
 }
 
 /* Left column: Animated avatar */
 .login-image {
   display: none;
   flex: 1;
+  position: relative;
+  padding-top: 10rem; /* Creates space at the top for the logo */
 }
 
 .login-image lottie-player {
@@ -32,14 +35,13 @@
   padding: 2rem;
 }
 
-/* Logo Section */
-.login-logo {
-  text-align: center;
-  margin-bottom: 1rem;
+/* Logo specific for small and large screens */
+.logo-large {
+  left: 1.5rem;
 }
 
-.login-logo img {
-  width: 150px;
+.logo-small {
+  margin-bottom: 0rem; /* Increased margin for small screens */
 }
 
 /* Heading styling */
@@ -217,7 +219,8 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Responsive: On larger screens, show two columns */
+/* Responsive adjustments */
+/* For medium screens and above, display in two columns */
 @media (min-width: 768px) {
   .login-wrapper {
     flex-direction: row;
@@ -227,7 +230,7 @@
   }
 }
 
-/* Smaller devices adjustments */
+/* For small screens, adjust padding and font size */
 @media (max-width: 480px) {
   .login-container {
     padding: 1.5rem;

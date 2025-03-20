@@ -19,6 +19,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { ProfileComponent } from './profile/profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     ForgotPasswordComponent,
     JobDetailsComponent,
     UserFormComponent,
+    ProfileComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,9 +8,8 @@ import { AppComponent } from './app.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { UserFormComponent } from './user-form/user-form.component';
-
-
+// import { UserFormComponent } from './user-form/user-form.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,14 +17,17 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'job-details', component: JobDetailsComponent},
+  { path: 'job-details', component: JobDetailsComponent },
   { path: 'myOffers', component: MyOffersComponent, canActivate: [AuthGuard] },
-  { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/login' }
+  // { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

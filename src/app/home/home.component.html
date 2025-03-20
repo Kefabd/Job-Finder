@@ -1,32 +1,37 @@
-<div class="page-container">
-  <!--Top Slogan-->
-  <div class="page-top">
-    <h1>Find Your Dream Job – <span>One Click Away!</span></h1>
-  </div>
-  <!-- Navigation Bar -->
-  <app-searchbar (searchEvent)="onSearch($event)"></app-searchbar>
+<div class="flex">
+  <div class="flex flex-col w-24 lg:w-64"></div>
+  <div class="flex-1 overflow-y-auto">
+    <div class="page-container">
+      <!--Top Slogan-->
+      <div class="page-top">
+        <h1>Find Your Dream Job – <span>One Click Away!</span></h1>
+      </div>
+      <!-- Navigation Bar -->
+      <app-searchbar (searchEvent)="onSearch($event)"></app-searchbar>
 
-  <div class="precard">
-    <div class="jobs-found">
-      <h3>Jobs Found: {{ jobs.length }}</h3>
+      <div class="precard">
+        <div class="jobs-found">
+          <h3>Jobs Found: {{ jobs.length }}</h3>
+        </div>
+        <div class="sort-container">
+          <label for="sort">Sort by:</label>
+          <select id="sort" (change)="sortJobs($event)">
+            <option value="date">Date</option>
+            <option value="alphabetical">A-Z</option>
+          </select>
+        </div>
+
+      </div>
+      <!-- Jobs Grid Container -->
+      <main class="jobs-container">
+        <!-- Job Cards -->
+        <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
+      </main>
+
+      <!-- No Jobs Found Message -->
+      <div class="no-jobs-message" *ngIf="jobs.length === 0">
+        <p>No jobs found matching your criteria.</p>
+      </div>
     </div>
-    <div class="sort-container">
-      <label for="sort">Sort by:</label>
-      <select id="sort" (change)="sortJobs($event)">
-        <option value="date">Date</option>
-        <option value="alphabetical">A-Z</option>
-      </select>
-    </div>
-
-  </div>
-  <!-- Jobs Grid Container -->
-  <main class="jobs-container">
-    <!-- Job Cards -->
-    <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
-  </main>
-
-  <!-- No Jobs Found Message -->
-  <div class="no-jobs-message" *ngIf="jobs.length === 0">
-    <p>No jobs found matching your criteria.</p>
   </div>
 </div>

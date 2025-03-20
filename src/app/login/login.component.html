@@ -1,46 +1,54 @@
-<div class="login-wrapper">
-  <!-- Left Column: Animated Avatar -->
-  <div class="login-image">
+<div class="login-wrapper flex">
+  <!-- Left Column: Animated Avatar & Logo for large screens -->
+  <div class="login-image w-1/2 relative">
+    <!-- Logo visible only on medium and larger screens -->
+    <div class="logo-large hidden md:block absolute top-4 left-4 z-50">
+      <img src="assets/logo.png" alt="Job Finder Logo" class="w-64 h-auto" />
+    </div>
     <lottie-player src="assets/user-interface-research.json" background="transparent" speed="1" loop autoplay
-      style="width: 100%; height: 100%;">
+      class="w-full h-full">
     </lottie-player>
   </div>
 
-  <!-- Right Column: Login Form -->
-  <div class="login-container">
-    <!-- Logo Section -->
-    <div class="login-logo">
-      <img src="assets/your-logo.png" alt="Your Logo" />
+  <!-- Right Column: Login Form & Logo for small screens -->
+  <div class="login-container w-1/2 p-8 relative">
+    <!-- Logo visible only on small screens -->
+    <div class="logo-small md:hidden text-center mb-8">
+      <img src="assets/logo.png" alt="Job Finder Logo" class="w-48 h-auto inline-block" />
     </div>
-    <h2>Login</h2>
+    <h2 class="text-2xl font-bold mb-6">Login</h2>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div>
-        <label for="email">Email</label>
-        <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="Enter your email"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
       </div>
-      <div>
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input id="password" type="password" formControlName="password" placeholder="Enter your password"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
       </div>
-      <!-- Forgot Password Link -->
-      <!-- <p class="forgot-password">
-        <a (click)="forgotPassword()">Forgot password?</a>
-      </p> -->
-      <p class="forgot-password">
+      <p class="mb-4 text-sm text-blue-500">
         <a routerLink="/forgot-password">Forgot password?</a>
       </p>
-      <div *ngIf="errorMessage" class="error">
+      <div *ngIf="errorMessage" class="mb-4 text-red-500">
         {{ errorMessage }}
       </div>
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      <button type="submit" [disabled]="loginForm.invalid"
+        class="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+        Login
+      </button>
     </form>
-    <hr />
-    <button class="google-signin-btn" (click)="signInWithGoogle()">
-      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" />
+    <hr class="my-4" />
+    <button
+      class="google-signin-btn flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100"
+      (click)="signInWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo"
+        class="w-5 h-5 mr-2" />
       Sign in / Sign up with Google
     </button>
-    <p>
-      Don't have an account? <a routerLink="/register">Register here</a>
+    <p class="mt-4 text-center text-sm">
+      Don't have an account? <a routerLink="/register" class="text-blue-500">Register here</a>
     </p>
   </div>
 </div>

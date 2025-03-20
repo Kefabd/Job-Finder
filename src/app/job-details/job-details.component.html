@@ -23,8 +23,17 @@
   </section>
 
   <footer class="job-actions">
+    <!-- Display "Save Job" button if the job is not saved -->
     <button *ngIf="!isJobSaved" class="save-button" (click)="saveJob()">Save Job</button>
+
+    <!-- Display "Unsave Job" button if the job is already saved -->
+    <button *ngIf="isJobSaved" class="unsave-button" (click)="unsaveJob()">Unsave Job</button>
+
+    <!-- Display "Apply Now" button if the job is not applied -->
     <button *ngIf="!isJobApplied" class="apply-button" (click)="openApplyPopup()">Apply Now</button>
+
+     <!-- Display "Already Apply" button if the job is  applied -->
+     <button *ngIf="isJobApplied" class="apply-button" (click)="openApplyPopup()">Already Applied</button>
   </footer>
 </div>
 <!-- Apply Confirmation Popup -->

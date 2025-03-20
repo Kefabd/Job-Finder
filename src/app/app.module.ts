@@ -19,6 +19,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { UserService } from './services/user/user.service';
 
 
 @NgModule({
@@ -55,7 +56,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

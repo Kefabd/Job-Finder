@@ -64,15 +64,9 @@ export class LoginComponent {
         });
       });
     } catch (error: any) {
-      console.log('Redirecting to /app...');
-      // sessionStorage.setItem('user', String(result.user.displayName));
       this.router.navigate(['/home']).then((success) => {
         console.log('Navigation result:', success);
       });
     }
-  }
-  catch(error: any) {
-    console.error('Google sign in error:', error);
-    this.errorMessage = error.message;
   }
 }

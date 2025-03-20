@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { getAuth } from '@angular/fire/auth';
@@ -8,12 +8,11 @@ import { getAuth } from '@angular/fire/auth';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
   userForm: FormGroup;
 
   constructor(private fb: FormBuilder, private firestore: Firestore) {
     this.userForm = this.fb.group({
-      fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       photoUrl: [''],
       resumeUrl: [''],
@@ -22,6 +21,11 @@ export class UserFormComponent {
       savedJobs: [[]], // Initialize empty array
       appliedJobs: [[]],
     });
+  }
+
+  ngOnInit(): void {
+    const auth = getAuth();
+    console.log(auth.currentUser);
   }
 
   // Getter for experience

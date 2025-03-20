@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-import { getAuth } from '@angular/fire/auth';
+import { getAuth, onAuthStateChanged, User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-my-offers',
@@ -14,24 +12,23 @@ import { getAuth } from '@angular/fire/auth';
 export class MyOffersComponent implements OnInit {
   currentTab = 'saved'; // Default to 'saved'
   jobs: any[] = [];
-  user: any;
-
-  toggleTab(tab: string): void {
-    this.currentTab = tab;
-    this.loadJobs(); // Reload jobs when switching tabs
-  }
+  user: User | null = null;
 
   constructor(private api: ApiService, private router: Router, private firestore: Firestore) {}
 
   ngOnInit(): void {
-    // Ensure Firebase app is initialized and check the current user
     const auth = getAuth();
-    this.user = auth.currentUser;
-    if (this.user) {
-      this.loadJobs();
-    } else {
-      console.error('User not logged in');
-    }
+    
+    // Wait for authentication state change
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        this.user = user;
+        console.log('User authenticated:', user.uid);
+        await this.loadJobs();
+      } else {
+        console.error('User not logged in');
+      }
+    });
   }
 
   async loadJobs() {
@@ -49,25 +46,31 @@ export class MyOffersComponent implements OnInit {
         return;
       }
 
-      //Take the data from the Doc
       const userData = userSnap.data();
       if (!userData) {
         console.error('No user data found');
         return;
       }
 
+      // Determine the correct job list to load
       const jobIds: string[] = this.currentTab === 'saved' ? (userData['savedJobs'] || []) : (userData['appliedJobs'] || []);
-      console.log('Job IDs to load:', jobIds);
+      console.log(`Loading ${this.currentTab} jobs with IDs:`, jobIds);
 
       if (!jobIds.length) {
         this.jobs = [];
         return;
       }
 
-      // Fetch jobs from the API based on the job IDs
+      // Fetch jobs from API and filter them
       this.api.getJobs(50, '', '').subscribe(
         (response) => {
-          // Filter the jobs based on the saved or applied job IDs
+          console.log('API Response:', response);
+          
+          if (!response || !response.jobs) {
+            console.error('Invalid API response structure.');
+            return;
+          }
+
           this.jobs = response.jobs.filter((job: any) => jobIds.includes(job.id));
           console.log(`Loaded ${this.currentTab} jobs:`, this.jobs);
         },
@@ -78,6 +81,11 @@ export class MyOffersComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
+  }
+
+  toggleTab(tab: string): void {
+    this.currentTab = tab;
+    this.loadJobs(); // Reload jobs when switching tabs
   }
 
   sortJobs(event: Event) {

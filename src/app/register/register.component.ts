@@ -80,11 +80,19 @@ export class RegisterComponent {
 
   // Use Firestore's doc() and setDoc() from the modular API
   private async saveUserToFirestore(user: any, data: { firstName: string, lastName: string }) {
-    const userRef = doc(this.firestore, 'users', user.uid);
-    await setDoc(userRef, {
-      email: user.email,
-      firstName: data.firstName,
-      lastName: data.lastName
-    }, { merge: true });
+    try {
+      // Create a user document in the 'users' collection using the user's UID
+      const userRef = doc(this.firestore, 'users', user.uid);
+      await setDoc(userRef, {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: user.email,
+        photoURL: user.photoURL,
+        uid: user.uid,
+      });
+      console.log('User saved to Firestore:', user.uid);
+    } catch (error) {
+      console.error('Error saving user to Firestore:', error);
+    }
   }
 }

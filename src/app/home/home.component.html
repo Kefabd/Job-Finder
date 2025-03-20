@@ -5,22 +5,24 @@
   </div>
   <!-- Navigation Bar -->
   <app-searchbar (searchEvent)="onSearch($event)"></app-searchbar>
-  
+
   <div class="precard">
-    <div class="jobs-found"><h3 >Jobs Found: {{ jobs.length }}</h3></div>
+    <div class="jobs-found">
+      <h3>Jobs Found: {{ jobs.length }}</h3>
+    </div>
     <div class="sort-container">
       <label for="sort">Sort by:</label>
       <select id="sort" (change)="sortJobs($event)">
         <option value="date">Date</option>
         <option value="alphabetical">A-Z</option>
-      </select>      
+      </select>
     </div>
 
   </div>
   <!-- Jobs Grid Container -->
   <main class="jobs-container">
     <!-- Job Cards -->
-      <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
+    <app-job-card *ngFor="let job of jobs" [job]="job" class="job-card"></app-job-card>
   </main>
 
   <!-- No Jobs Found Message -->

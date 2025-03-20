@@ -1,12 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  user,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   private auth: Auth = inject(Auth);
@@ -19,7 +26,7 @@ export class LoginComponent {
   constructor() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
@@ -27,7 +34,11 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
     const { email, password } = this.loginForm.value;
     try {
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       console.log('Logged in user:', userCredential.user);
       sessionStorage.setItem('user', JSON.stringify(email));
       // Redirect to the protected route
@@ -39,30 +50,23 @@ export class LoginComponent {
   }
 
   async signInWithGoogle() {
-    try 
-    {
+    try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google sign in success:', result.user);
-  
+
       console.log('Redirecting to /home...');
-      this.router.navigate(['/home']).then(success => {
-
-
+      this.router.navigate(['/home']).then((success) => {
         console.log('Redirecting to /app...');
         sessionStorage.setItem('user', String(result.user.displayName));
-        this.router.navigate(['/home']).then(success => {
-
+        this.router.navigate(['/home']).then((success) => {
           console.log('Navigation result:', success);
         });
-      })
-      
-    }catch (error: any) {
-
-      this.router.navigate(['/home']).then(success => {
+      });
+    } catch (error: any) {
+      this.router.navigate(['/home']).then((success) => {
         console.log('Navigation result:', success);
       });
-    };
+    }
   }
-
 }

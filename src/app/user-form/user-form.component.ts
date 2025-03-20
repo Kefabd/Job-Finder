@@ -6,7 +6,7 @@ import { getAuth } from '@angular/fire/auth';
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css']
+  styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent {
   userForm: FormGroup;
@@ -36,26 +36,29 @@ export class UserFormComponent {
 
   // Add a new experience field
   addExperience() {
-    this.experience.push(this.fb.group({
-      title: [''],
-      company: [''],
-      startDate: [''],
-      endDate: [''],
-      description: ['']
-    }));
+    this.experience.push(
+      this.fb.group({
+        title: [''],
+        company: [''],
+        startDate: [''],
+        endDate: [''],
+        description: [''],
+      })
+    );
   }
 
   // Add a new academic background field
   addAcademicBackground() {
-    this.academicBackground.push(this.fb.group({
-      institution: [''],
-      degree: [''],
-      fieldOfStudy: [''],
-      startDate: [''],
-      endDate: ['']
-    }));
+    this.academicBackground.push(
+      this.fb.group({
+        institution: [''],
+        degree: [''],
+        fieldOfStudy: [''],
+        startDate: [''],
+        endDate: [''],
+      })
+    );
   }
-  
 
   // Submit form data to Firestore
   async submitForm() {
@@ -63,7 +66,7 @@ export class UserFormComponent {
       const auth = getAuth();
       const user = auth.currentUser;
 
-      console.log(user)
+      console.log(user);
 
       if (!user) {
         alert('You must be logged in to submit the form.');
@@ -75,7 +78,7 @@ export class UserFormComponent {
 
       const formData = {
         userId,
-        ...this.userForm.value // Spread operator to take all form data
+        ...this.userForm.value, // Spread operator to take all form data
       };
 
       try {

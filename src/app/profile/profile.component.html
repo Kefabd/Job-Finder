@@ -1,44 +1,63 @@
 <div class="flex">
       <div class="flex flex-col w-24 lg:w-64"></div>
-      <div class="flex-1 overflow-y-auto">
-            <div class="profile-container" *ngIf="!loading">
-                  <!-- Error State -->
-                  <div *ngIf="error" class="error-message">
-                        {{ error }}
-                        <button (click)="ngOnInit()">Retry</button>
-                  </div>
+      <div class="">
+            <div class="flex">
+                  <div class="flex-1 overflow-y-auto">
+                        <div class="profile-container" *ngIf="!loading">
+                              <!-- Loading State -->
+                              <div *ngIf="loading" class="loading-message">
+                                    Loading profile...
+                              </div>
 
-                  <!-- Profile Content -->
-                  <div *ngIf="userProfile">
-                        <h2>{{ userProfile.fullName }}</h2>
-                        <p>Email: {{ userProfile.email }}</p>
+                              <!-- No Profile State -->
+                              <div *ngIf="!hasProfile && !loading" class="empty-profile">
+                                    <h2>Create Your Profile</h2>
+                                    <p>Looks like you haven't created a profile yet.</p>
+                                    <button mat-raised-button color="primary" (click)="openEditDialog()">
+                                          Create Profile
+                                    </button>
+                              </div>
 
-                        <!-- Experience Section -->
-                        <div class="section">
-                              <h3>Experience</h3>
-                              <div *ngFor="let exp of userProfile.experience" class="experience-item">
-                                    <h4>{{ exp.title }} at {{ exp.company }}</h4>
-                                    <p>{{ exp.startDate | date }} - {{ exp.endDate | date }}</p>
-                                    <p>{{ exp.description }}</p>
+                              <!-- Existing Profile View -->
+                              <div *ngIf="hasProfile" class="profile-content">
+                                    <h2>{{ userProfile.fullName || 'N/A' }}</h2>
+                                    <p>Email: {{ userProfile.email || 'N/A' }}</p>
+
+                                    <!-- Experience Section -->
+                                    <div class="section">
+                                          <h3>Experience</h3>
+                                          <div *ngIf="userProfile.experience?.length > 0">
+                                                <div *ngFor="let exp of userProfile.experience" class="experience-item">
+                                                      <h4>{{ exp.title }} at {{ exp.company }}</h4>
+                                                      <p>{{ exp.startDate | date }} - {{ exp.endDate | date }}</p>
+                                                      <p>{{ exp.description }}</p>
+                                                </div>
+                                          </div>
+                                          <p *ngIf="!userProfile.experience?.length">No experience added yet</p>
+                                    </div>
+
+                                    <!-- Education Section -->
+                                    <div class="section">
+                                          <h3>Education</h3>
+                                          <div *ngIf="userProfile.academicBackground?.length > 0">
+                                                <div *ngFor="let edu of userProfile.academicBackground"
+                                                      class="education-item">
+                                                      <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
+                                                      <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{
+                                                            edu.endDate | date
+                                                            }})</p>
+                                                </div>
+                                          </div>
+                                          <p *ngIf="!userProfile.academicBackground?.length">No education details added
+                                                yet</p>
+                                    </div>
+
+                                    <button mat-raised-button color="primary" (click)="openEditDialog()">
+                                          Edit Profile
+                                    </button>
                               </div>
                         </div>
-
-                        <!-- Education Section -->
-                        <div class="section">
-                              <h3>Education</h3>
-                              <div *ngFor="let edu of userProfile.academicBackground" class="education-item">
-                                    <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
-                                    <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{ edu.endDate | date }})</p>
-                              </div>
-                        </div>
-
-                        <button (click)="openEditDialog()">Edit Profile</button>
                   </div>
-            </div>
-
-            <!-- Loading State -->
-            <div *ngIf="loading" class="loading-message">
-                  Loading profile...
             </div>
       </div>
 </div>

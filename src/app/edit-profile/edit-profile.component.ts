@@ -18,17 +18,23 @@ export class EditProfileComponent implements OnInit {
     public dialogRef: MatDialogRef<EditProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    // Match the form structure to UserFormComponent
     this.profileForm = this.fb.group({
-      fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      photoUrl: [''],
+      resumeUrl: [''],
       experience: this.fb.array([]),
       academicBackground: this.fb.array([]),
+      savedJobs: [[]],
+      appliedJobs: [[]],
     });
   }
 
   ngOnInit() {
     if (this.data) {
-      this.profileForm.patchValue(this.data);
+      // Filter out fullName if not needed anymore
+      const { fullName, ...formData } = this.data;
+      this.profileForm.patchValue(formData);
       this.populateArray('experience', this.data.experience);
       this.populateArray('academicBackground', this.data.academicBackground);
     }
@@ -37,6 +43,7 @@ export class EditProfileComponent implements OnInit {
   get experience() {
     return this.profileForm.get('experience') as FormArray;
   }
+
   get academicBackground() {
     return this.profileForm.get('academicBackground') as FormArray;
   }
@@ -77,10 +84,13 @@ export class EditProfileComponent implements OnInit {
 
       if (user) {
         try {
-          await setDoc(
-            doc(this.firestore, 'users', user.uid),
-            this.profileForm.value
-          );
+          // Include userId in the document data
+          const formData = {
+            userId: user.uid,
+            ...this.profileForm.value,
+          };
+
+          await setDoc(doc(this.firestore, 'users', user.uid), formData);
           this.dialogRef.close(true);
         } catch (error) {
           console.error('Error updating profile:', error);

@@ -14,16 +14,16 @@
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #000;
   animation: fadeInUp 0.6s ease-out;
 }
 
 .job-details-page {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #141E30, #243B55);
-  color: #fff;
+  background: #fff;
+  color: #000;
   padding: 2rem;
   box-sizing: border-box;
   animation: fadeInUp 0.6s ease-out;
@@ -37,14 +37,14 @@
 .back-button {
   background: transparent;
   border: none;
-  color: #fff;
+  color: #000;
   font-size: 1.1rem;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .back-button:hover {
-  color: #FF6B6B;
+  color: #0066cc;
   transform: translateX(-4px);
 }
 
@@ -52,6 +52,9 @@
 .job-header {
   text-align: center;
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .company-logo {
@@ -60,20 +63,20 @@
   margin-bottom: 1rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #fff;
+  border: 3px solid #000;
 }
 
 .job-header h1 {
   font-size: 2.5rem;
   margin: 0.5rem 0;
-  color: #FF6B6B;
+  color: #0066cc;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .job-header h2 {
   font-size: 1.5rem;
   margin: 0;
-  color: #ccc;
+  color: #666;
 }
 
 /* Job Info Section */
@@ -86,22 +89,22 @@
 
 .job-info p {
   flex: 1 1 calc(50% - 1rem);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   margin: 0.5rem;
   padding: 1rem;
   border-radius: 8px;
   font-size: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Job Description */
 .job-description {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
   padding: 2rem;
   border-radius: 8px;
   margin-bottom: 2rem;
   line-height: 1.6;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer & Action Buttons */
@@ -115,16 +118,16 @@ footer.job-actions {
 .save-button {
   padding: 1rem 2rem;
   font-size: 1.2rem;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+  border: 2px solid #000;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .save-button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
 
@@ -132,7 +135,7 @@ footer.job-actions {
   padding: 1rem 2rem;
   font-size: 1.2rem;
   color: #fff;
-  background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+  background: linear-gradient(135deg, #0066cc, #0099ff);
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -160,12 +163,16 @@ footer.job-actions {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .popup-container {
-  background: linear-gradient(135deg, #2C3E50, #4C5C70);
+  background: linear-gradient(135deg, #2c3e50, #4c5c70);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -177,14 +184,20 @@ footer.job-actions {
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .popup-container h2 {
   font-size: 1.8rem;
   margin-top: 0;
-  color: #FF6B6B;
+  color: #0066cc;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
@@ -209,18 +222,18 @@ footer.job-actions {
 }
 
 .no-button {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+  border: 2px solid #000;
 }
 
 .no-button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
 
 .yes-button {
-  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  background: linear-gradient(135deg, #0066cc, #0099ff);
   color: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }

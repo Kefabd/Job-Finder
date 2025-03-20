@@ -3,35 +3,26 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { getAuth } from '@angular/fire/auth';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  userProfile: any;
+  userProfile: any = {};
   loading = true;
-  error = '';
+  hasProfile = false;
 
   constructor(private firestore: Firestore, public dialog: MatDialog) {}
 
-  openEditDialog() {
-    const dialogRef = this.dialog.open(EditProfileComponent, {
-      width: '600px',
-      data: this.userProfile,
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.ngOnInit(); // Refresh data after edit
-    });
-  }
   async ngOnInit() {
     try {
       const auth = getAuth();
       const user = auth.currentUser;
 
       if (!user) {
-        this.error = 'User not authenticated';
+        this.userProfile = null;
         return;
       }
 
@@ -40,14 +31,24 @@ export class ProfileComponent implements OnInit {
 
       if (userDoc.exists()) {
         this.userProfile = userDoc.data();
+        this.hasProfile = true;
       } else {
-        this.error = 'Profile not found. Please create one.';
+        this.userProfile = {};
+        this.hasProfile = false;
       }
     } catch (err) {
-      this.error = 'Error loading profile';
-      console.error(err);
+      console.error('Error loading profile:', err);
     } finally {
       this.loading = false;
     }
+  }
+
+  openEditDialog() {
+    const dialogRef = this.dialog.open(EditProfileComponent, {
+      width: '600px',
+      data: this.userProfile,
+    });
+
+    dialogRef.afterClosed().subscribe(() => this.ngOnInit());
   }
 }

@@ -1,3 +1,41 @@
+/* ---------------------------
+   Navbar styling
+--------------------------- */
+.navbar {
+  background-color: #f8f9fa;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  /* You can add padding or other styles as needed */
+}
+
+/* ---------------------------
+   Main content
+   Positioned to the right of navbar
+--------------------------- */
+.main-content {
+  margin-left: 200px; /* Adjust to match your navbar width */
+  width: calc(100% - 200px);
+  padding: 1rem;
+}
+
+/* ---------------------------
+   Profile Container
+--------------------------- */
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 .empty-profile {
   text-align: center;
   padding: 2rem;
@@ -7,9 +45,108 @@
 }
 
 .empty-profile button {
+  background-color: #007bff !important;
+  color: #fff !important;
+  border-radius: 4px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   margin-top: 1rem;
 }
 
+.empty-profile button:hover {
+  background-color: #0056b3 !important;
+}
+
+/* ---------------------------
+   Profile Header - CV Style
+--------------------------- */
+.profile-header {
+  display: flex;
+  justify-content: space-between; /* Spread out left (picture+info) and right (button) */
+  align-items: center;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Left side (picture + name/email) */
+.profile-left {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  margin-right: 1rem;
+}
+
+.profile-picture img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.default-avatar {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  color: #fff;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.profile-info p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Right side (actions) */
+.profile-actions {
+  /* Holds the edit button on the right */
+}
+
+/* If you're not using Angular Material theme, you can style the button yourself */
+.profile-actions button,
+.edit-profile-btn {
+  background-color: #007bff; /* Button color */
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.profile-actions button:hover,
+.edit-profile-btn:hover {
+  background-color: #0056b3; /* Darker hover color */
+}
+
+/* ---------------------------
+   Additional info notice
+--------------------------- */
+.profile-extra {
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: #888;
+}
+
+/* ---------------------------
+   Sections (Experience/Education)
+--------------------------- */
 .section {
   margin: 1.5rem 0;
   padding-bottom: 1rem;
@@ -23,6 +160,16 @@
   border-left: 2px solid #00796b;
 }
 
-button.mat-raised-button {
-  margin-top: 1rem;
+/* Make the section titles bold */
+.experience-item h4,
+.education-item h4 {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+/* Subtext styling for experience/education details */
+.experience-item p,
+.education-item p {
+  margin: 0.2rem 0;
+  color: #666;
 }

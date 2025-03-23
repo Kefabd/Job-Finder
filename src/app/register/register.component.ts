@@ -13,6 +13,7 @@ import {
 } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,7 @@ export class RegisterComponent {
   // Inject Firestore using the new modular API
   private firestore: Firestore = inject(Firestore);
   private router: Router = inject(Router);
+  private userService: UserService = inject(UserService);
 
   registerForm: FormGroup;
   errorMessage: string = '';
@@ -68,6 +70,10 @@ export class RegisterComponent {
         firstName,
         lastName,
       });
+      await this.userService.saveUserToFirestore(userCredential.user, {
+        firstName,
+        lastName,
+      });
       this.successMessage = 'Registration successful!';
       this.router.navigate(['/app']);
     } catch (error: any) {
@@ -82,7 +88,7 @@ export class RegisterComponent {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
       const user = result.user;
-      console.log('Google registration success:', user);
+
       let firstName = '';
       let lastName = '';
       if (user.displayName) {
@@ -90,8 +96,10 @@ export class RegisterComponent {
         firstName = names[0];
         lastName = names.slice(1).join(' ');
       }
-      await this.saveUserToFirestore(user, { firstName, lastName });
-      this.router.navigate(['/app']);
+
+      await this.userService.saveUserToFirestore(user, { firstName, lastName });
+
+      this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Google registration error:', error);
       this.errorMessage = error.message;

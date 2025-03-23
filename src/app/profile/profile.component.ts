@@ -13,6 +13,11 @@ export class ProfileComponent implements OnInit {
   userProfile: any = {};
   loading = true;
   hasProfile = false;
+  getInitials(firstName: string, lastName: string): string {
+    const first = firstName ? firstName.charAt(0).toUpperCase() : '';
+    const last = lastName ? lastName.charAt(0).toUpperCase() : '';
+    return first + last;
+  }
 
   constructor(private firestore: Firestore, public dialog: MatDialog) {}
 

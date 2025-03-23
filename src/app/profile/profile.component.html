@@ -1,61 +1,91 @@
 <div class="flex">
-      <div class="flex flex-col w-24 lg:w-64"></div>
-      <div class="">
-            <div class="flex">
-                  <div class="flex-1 overflow-y-auto">
-                        <div class="profile-container" *ngIf="!loading">
-                              <!-- Loading State -->
-                              <div *ngIf="loading" class="loading-message">
-                                    Loading profile...
-                              </div>
+      <!-- Left Navbar (fixed width) -->
+      <div class="flex flex-col w-24 lg:w-64 navbar">
+            <!-- Navbar content goes here -->
+      </div>
 
-                              <!-- No Profile State -->
-                              <div *ngIf="!hasProfile && !loading" class="empty-profile">
-                                    <h2>Create Your Profile</h2>
-                                    <p>Looks like you haven't created a profile yet.</p>
-                                    <button mat-raised-button color="primary" (click)="openEditDialog()">
-                                          Create Profile
-                                    </button>
-                              </div>
+      <!-- Main Profile Content -->
+      <div class="main-content">
+            <div class="profile-container" *ngIf="!loading">
+                  <!-- Loading State -->
+                  <div *ngIf="loading" class="loading-message">
+                        Loading profile...
+                  </div>
 
-                              <!-- Existing Profile View -->
-                              <div *ngIf="hasProfile" class="profile-content">
-                                    <h2>{{ userProfile.fullName || 'N/A' }}</h2>
-                                    <p>Email: {{ userProfile.email || 'N/A' }}</p>
+                  <!-- No Profile State -->
+                  <div *ngIf="!hasProfile && !loading" class="empty-profile">
+                        <h2>Create Your Profile</h2>
+                        <p>Looks like you haven't created a profile yet.</p>
+                        <button mat-raised-button class="edit-profile-btn" (click)="openEditDialog()">
+                              Create Profile
+                        </button>
+                  </div>
 
-                                    <!-- Experience Section -->
-                                    <div class="section">
-                                          <h3>Experience</h3>
-                                          <div *ngIf="userProfile.experience?.length > 0">
-                                                <div *ngFor="let exp of userProfile.experience" class="experience-item">
-                                                      <h4>{{ exp.title }} at {{ exp.company }}</h4>
-                                                      <p>{{ exp.startDate | date }} - {{ exp.endDate | date }}</p>
-                                                      <p>{{ exp.description }}</p>
+                  <!-- Existing Profile View -->
+                  <div *ngIf="hasProfile" class="profile-content">
+                        <!-- Profile Header Section -->
+                        <div class="profile-header">
+                              <div class="profile-left">
+                                    <div class="profile-picture">
+                                          <!-- Display user photo if exists, otherwise default initials -->
+                                          <img *ngIf="userProfile.photoURL; else defaultAvatar"
+                                                [src]="userProfile.photoURL" alt="Profile Picture" />
+                                          <ng-template #defaultAvatar>
+                                                <div class="default-avatar">
+                                                      {{ getInitials(userProfile.firstName, userProfile.lastName) }}
                                                 </div>
-                                          </div>
-                                          <p *ngIf="!userProfile.experience?.length">No experience added yet</p>
+                                          </ng-template>
                                     </div>
-
-                                    <!-- Education Section -->
-                                    <div class="section">
-                                          <h3>Education</h3>
-                                          <div *ngIf="userProfile.academicBackground?.length > 0">
-                                                <div *ngFor="let edu of userProfile.academicBackground"
-                                                      class="education-item">
-                                                      <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
-                                                      <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{
-                                                            edu.endDate | date
-                                                            }})</p>
-                                                </div>
-                                          </div>
-                                          <p *ngIf="!userProfile.academicBackground?.length">No education details added
-                                                yet</p>
+                                    <div class="profile-info">
+                                          <h2>
+                                                {{ userProfile.firstName || 'Not yet filled' }}
+                                                {{ userProfile.lastName || 'Not yet filled' }}
+                                          </h2>
+                                          <p>Email: {{ userProfile.email || 'Not yet filled' }}</p>
                                     </div>
-
+                              </div>
+                              <!-- Profile Actions (Edit Button) -->
+                              <div class="profile-actions">
                                     <button mat-raised-button color="primary" (click)="openEditDialog()">
                                           Edit Profile
                                     </button>
                               </div>
+                        </div>
+
+                        <!-- Extra Info Notice -->
+                        <div class="profile-extra">
+                              <p>Please add the following details to complete your CV:</p>
+                        </div>
+
+                        <!-- Experience Section -->
+                        <div class="section">
+                              <h3>Experience</h3>
+                              <div *ngIf="userProfile.experience?.length > 0; else noExperience">
+                                    <div *ngFor="let exp of userProfile.experience" class="experience-item">
+                                          <h4>{{ exp.title }} at {{ exp.company }}</h4>
+                                          <p>{{ exp.startDate | date }} - {{ exp.endDate | date }}</p>
+                                          <p>{{ exp.description }}</p>
+                                    </div>
+                              </div>
+                              <ng-template #noExperience>
+                                    <p>No experience added yet. Click on edit to add your work history.</p>
+                              </ng-template>
+                        </div>
+
+                        <!-- Education Section -->
+                        <div class="section">
+                              <h3>Education</h3>
+                              <div *ngIf="userProfile.academicBackground?.length > 0; else noEducation">
+                                    <div *ngFor="let edu of userProfile.academicBackground" class="education-item">
+                                          <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
+                                          <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{ edu.endDate | date
+                                                }})</p>
+                                    </div>
+                              </div>
+                              <ng-template #noEducation>
+                                    <p>No education details added yet. Click on edit to add your academic background.
+                                    </p>
+                              </ng-template>
                         </div>
                   </div>
             </div>

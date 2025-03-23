@@ -19,9 +19,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { UserService } from './services/user/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-
 
 @NgModule({
   declarations: [
@@ -57,9 +57,9 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     ),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

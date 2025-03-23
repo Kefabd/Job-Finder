@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
 @Component({
   selector: 'app-home',
@@ -76,8 +76,20 @@ export class HomeComponent implements OnInit {
   
   // Added missing method
   logout(): void {
-    // Implement logout logic
-    sessionStorage.removeItem('user'); // Example implementation
-    this.router.navigate(['/login']); // Navigate to login page
+    const auth = getAuth();
+    signOut(auth)  // Firebase signOut method
+      .then(() => {
+        // Clear session storage or local storage as necessary
+        sessionStorage.removeItem('user');
+        localStorage.removeItem('userEmail'); // if you're using localStorage for storing the email
+
+        console.log('User logged out successfully');
+        
+        // Navigate the user to the login page after logging out
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => {
+        console.error('Error during logout:', error);
+      });
   }
 }

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { getAuth } from '@angular/fire/auth';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -10,6 +11,7 @@ import { getAuth } from '@angular/fire/auth';
 })
 export class UserFormComponent {
   userForm: FormGroup;
+  private userService: UserService = inject(UserService);
 
   constructor(private fb: FormBuilder, private firestore: Firestore) {
     this.userForm = this.fb.group({
@@ -60,7 +62,6 @@ export class UserFormComponent {
     );
   }
 
-  // Submit form data to Firestore
   async submitForm() {
     if (this.userForm.valid) {
       const auth = getAuth();
@@ -77,17 +78,19 @@ export class UserFormComponent {
       const userDocRef = doc(this.firestore, 'users', userId);
 
       const formData = {
-        userId,
         ...this.userForm.value, // Spread operator to take all form data
+        userId: getAuth().currentUser?.uid,
+        ...this.userForm.value, // Spread operator to include all form fields
       };
 
       try {
-        await setDoc(userDocRef, formData);
+        // Call the service method to save user data
+        await this.userService.updateUserData(formData);
         alert('User profile successfully saved!');
         this.userForm.reset(); // Reset the form after submission
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error saving user data:', error);
-        alert('An error occurred. Please try again. ');
+        alert('An error occurred. Please try again.');
       }
     } else {
       alert('Please fill in all required fields.');

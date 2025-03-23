@@ -1,105 +1,124 @@
-.edit-form {
-  padding: 20px;
+/* 1. Layout: Flex container for navbar + content */
+.flex {
+  display: flex;
+  width: 100%;
+  min-height: 100vh; /* so it spans full height */
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Navbar on the left (fixed) */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 200px; /* adjust as needed */
+  background-color: #f8f9fa;
+  overflow-y: auto;
+}
+
+/* 3. Main content to the right */
+.main-content {
+  margin-left: 200px; /* offset for the navbar width */
+  width: calc(100% - 200px);
+  padding: 1rem;
+
+  /* This is critical to center the container horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* align items at the top (change to center if you want vertical centering too) */
+}
+
+/* 4. The Edit Profile "card" */
+.edit-profile-container {
+  max-width: 600px; /* limit the width so it's not too wide on large screens */
+  width: 100%;
+  margin-top: 2rem; /* some top spacing */
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.edit-form h2 {
-  margin-top: 0;
-  font-size: 24px;
-  font-weight: 500;
-  color: #333;
+.edit-profile-container h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.8rem;
 }
 
+/* 5. Form Fields */
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
   display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #00796b;
-  outline: none;
 }
 
 .form-row {
   display: flex;
-  gap: 16px;
-  margin-bottom: 8px;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
+/* 6. Experience & Education blocks */
 .experience-group,
 .education-group {
-  margin-bottom: 16px;
-  padding: 16px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 4px;
+  background-color: #f9f9f9;
 }
 
-.experience-group .form-row,
-.education-group .form-row {
-  margin-bottom: 8px;
+/* 7. "Add" buttons */
+.add-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+/* 8. Bottom buttons (Save/Cancel) */
 .button-group {
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-button.mat-raised-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button.mat-raised-button:hover {
-  background-color: #005f4f;
-}
-/* Button styling for "Add Experience" and "Add Education" */
-button.add-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
+/* Angular Material overrides if no global theme */
+button.mat-raised-button[type="submit"] {
+  background-color: #007bff;
   color: #fff;
-  background-color: #00796b; /* Green accent color */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 12px;
 }
-
-button.add-button:hover {
-  background-color: #005f4f; /* Darker green on hover */
+button.mat-raised-button[type="submit"]:hover {
+  background-color: #0056b3;
 }
-
-button.add-button svg {
-  margin-right: 8px;
-  font-size: 16px;
+button.mat-raised-button:not([type="submit"]) {
+  background-color: #ccc;
+  color: #333;
+}
+button.mat-raised-button:not([type="submit"]):hover {
+  background-color: #999;
 }

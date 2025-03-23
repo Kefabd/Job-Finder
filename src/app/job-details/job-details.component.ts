@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Job } from '../models';
-import { Firestore, doc, getDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, updateDoc, arrayUnion, setDoc } from '@angular/fire/firestore';
 import { getAuth } from '@angular/fire/auth';
 
 @Component({
@@ -62,6 +62,34 @@ export class JobDetailsComponent implements OnInit {
     } catch (error) {
       console.error('Error saving job:', error);
       alert('Failed to save the job.');
+    }
+  }
+
+  // Unsave job
+  async unsaveJob(): Promise<void> {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) {
+      alert('You must be logged in to unsave jobs.');
+      return;
+    }
+
+    try {
+      // Remove the job from user's saved jobs in Firestore
+      const userRef = doc(this.firestore, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const savedJobs = userDoc.data()['savedJobs'] || [];
+        const updatedSavedJobs = savedJobs.filter((savedJobId: number) => savedJobId !== this.job?.id);
+
+        await setDoc(userRef, { savedJobs: updatedSavedJobs }, { merge: true });
+        this.isJobSaved = false;  // Update UI flag
+        console.log('Job unsaved successfully!');
+      }
+    } catch (error) {
+      console.error('Error unsaving job:', error);
+      alert('Failed to unsave the job.');
     }
   }
   

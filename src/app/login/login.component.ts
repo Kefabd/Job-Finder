@@ -9,6 +9,7 @@ import {
   user,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
   private auth: Auth = inject(Auth);
   private fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
+  private userService: UserService = inject(UserService);
 
   loginForm: FormGroup;
   errorMessage: string = '';
@@ -53,20 +55,41 @@ export class LoginComponent {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
-      console.log('Google sign in success:', result.user);
-
+      const user = result.user;
+  
+      console.log('Google sign-in success:', user);
+  
+      // Check if user exists in Firestore
+      const userExists = await this.userService.checkUserExists(user.uid);
+  
+      if (!userExists) {
+        console.log('User not found in Firestore, saving...');
+        let firstName = '';
+        let lastName = '';
+  
+        if (user.displayName) {
+          const names = user.displayName.split(' ');
+          firstName = names[0];
+          lastName = names.slice(1).join(' ');
+        }
+  
+        await this.userService.saveUserToFirestore(user, { firstName, lastName });
+      } else {
+        console.log('User already exists in Firestore.');
+      }
+  
+      // Store user session
+      sessionStorage.setItem('user', String(user.displayName));
+  
+      // Redirect to home
       console.log('Redirecting to /home...');
-      this.router.navigate(['/home']).then((success) => {
-        console.log('Redirecting to /app...');
-        sessionStorage.setItem('user', String(result.user.displayName));
-        this.router.navigate(['/home']).then((success) => {
-          console.log('Navigation result:', success);
-        });
-      });
-    } catch (error: any) {
       this.router.navigate(['/home']).then((success) => {
         console.log('Navigation result:', success);
       });
+    } catch (error: any) {
+      console.error('Google sign-in error:', error);
+      this.errorMessage = error.message;
     }
   }
+
 }

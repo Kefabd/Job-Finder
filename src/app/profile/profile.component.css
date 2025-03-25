@@ -173,3 +173,10 @@
   margin: 0.2rem 0;
   color: #666;
 }
+/* Place this in a global stylesheet or in styles.scss so it overrides Angular Material defaults */
+.custom-dialog-container {
+  position: fixed !important;
+  top: 50% !important;
+  left: calc(50% + 100px) !important;
+  transform: translate(-50%, -50%);
+}

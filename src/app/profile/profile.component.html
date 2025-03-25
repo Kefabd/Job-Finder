@@ -16,7 +16,7 @@
                   <div *ngIf="!hasProfile && !loading" class="empty-profile">
                         <h2>Create Your Profile</h2>
                         <p>Looks like you haven't created a profile yet.</p>
-                        <button mat-raised-button class="edit-profile-btn" (click)="openEditDialog()">
+                        <button mat-raised-button class="edit-profile-btn" [routerLink]="['/settings/edit']">
                               Create Profile
                         </button>
                   </div>
@@ -27,18 +27,20 @@
                         <div class="profile-header">
                               <div class="profile-left">
                                     <div class="profile-picture">
-                                          <!-- Display user photo if exists, otherwise default initials -->
-                                          <img *ngIf="userProfile.photoUrl; else defaultAvatar"
-                                                [src]="userProfile.photoUrl" alt="Profile Picture" />
+                                          <!-- Show user's photo if available, else display initials -->
+                                          <img *ngIf="userProfile?.photoUrl; else defaultAvatar"
+                                                [src]="userProfile.photoUrl" alt="Photo de profil" />
                                           <ng-template #defaultAvatar>
                                                 <div class="default-avatar">
-                                                      {{ getInitials(userProfile.firstName, userProfile.lastName) }}
+                                                      {{ getInitials(userProfile?.firstName[0],
+                                                      userProfile?.lastName[0]) }}
                                                 </div>
                                           </ng-template>
                                     </div>
                                     <div class="profile-info">
                                           <h2>
-                                                {{ userProfile.firstName.charAt(0).toUpperCase() + userProfile.firstName.slice(1) || 'Not yet filled' }}
+                                                {{ userProfile.firstName.charAt(0).toUpperCase() +
+                                                userProfile.firstName.slice(1) || 'Not yet filled' }}
                                                 {{ userProfile.lastName.toUpperCase() || 'Not yet filled' }}
                                           </h2>
                                           <p>Email: {{ userProfile.email || 'Not yet filled' }}</p>
@@ -46,7 +48,7 @@
                               </div>
                               <!-- Profile Actions (Edit Button) -->
                               <div class="profile-actions">
-                                    <button mat-raised-button color="primary" (click)="openEditDialog()">
+                                    <button mat-raised-button color="primary" [routerLink]="['/settings/edit']">
                                           Edit Profile
                                     </button>
                               </div>
@@ -76,15 +78,16 @@
                               <div class="section">
                                     <h3>Education</h3>
                                     <div *ngIf="userProfile.academicBackground?.length > 0; else noEducation">
-                                          <div *ngFor="let edu of userProfile.academicBackground" class="education-item">
+                                          <div *ngFor="let edu of userProfile.academicBackground"
+                                                class="education-item">
                                                 <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
-                                                <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{ edu.endDate | date
-                                                      }})</p>
+                                                <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{ edu.endDate |
+                                                      date }})</p>
                                           </div>
                                     </div>
                                     <ng-template #noEducation>
-                                          <p>No education details added yet. Click on edit to add your academic background.
-                                          </p>
+                                          <p>No education details added yet. Click on edit to add your academic
+                                                background.</p>
                                     </ng-template>
                               </div>
                         </div>

@@ -58,7 +58,7 @@ export class NavbarComponent implements OnInit {
   }
 
   shouldShowNavbar(): boolean {
-    return this.router.url !== '/login';
+    return this.router.url !== '/login' && this.router.url !== '/register';
   }
 
   handleLogout() {

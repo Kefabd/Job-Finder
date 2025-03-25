@@ -111,11 +111,6 @@
   color: #666;
 }
 
-/* Right side (actions) */
-.profile-actions {
-  /* Holds the edit button on the right */
-}
-
 /* If you're not using Angular Material theme, you can style the button yourself */
 .profile-actions button,
 .edit-profile-btn {

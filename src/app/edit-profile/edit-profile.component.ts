@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Firestore, doc, updateDoc, getDoc } from '@angular/fire/firestore';
 import { getAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,14 +11,13 @@ import { getAuth } from '@angular/fire/auth';
 })
 export class EditProfileComponent implements OnInit {
   profileForm: FormGroup;
+  userProfile: any = {};
 
   constructor(
     private fb: FormBuilder,
     private firestore: Firestore,
-    public dialogRef: MatDialogRef<EditProfileComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private router: Router
   ) {
-    // Match the form structure to UserFormComponent
     this.profileForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       photoUrl: [''],
@@ -30,13 +29,22 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    if (this.data) {
-      // Filter out fullName if not needed anymore
-      const { fullName, ...formData } = this.data;
-      this.profileForm.patchValue(formData);
-      this.populateArray('experience', this.data.experience);
-      this.populateArray('academicBackground', this.data.academicBackground);
+  async ngOnInit() {
+    // Charger le profil utilisateur depuis Firestore
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      const userDocRef = doc(this.firestore, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        this.userProfile = userDoc.data();
+        this.profileForm.patchValue(this.userProfile);
+        this.populateArray('experience', this.userProfile.experience || []);
+        this.populateArray(
+          'academicBackground',
+          this.userProfile.academicBackground || []
+        );
+      }
     }
   }
 
@@ -81,21 +89,20 @@ export class EditProfileComponent implements OnInit {
     if (this.profileForm.valid) {
       const auth = getAuth();
       const user = auth.currentUser;
-  
       if (user) {
         try {
-          // Reference to the Firestore document
           const userDocRef = doc(this.firestore, 'users', user.uid);
-  
-          // Update only the fields that have been modified in the form
           await updateDoc(userDocRef, this.profileForm.value);
-  
-          // Optionally, close the dialog or notify user
-          this.dialogRef.close(true);
+          // Après enregistrement, naviguer vers la page de profil
+          this.router.navigate(['/settings']);
         } catch (error) {
           console.error('Error updating profile:', error);
         }
       }
     }
+  }
+
+  cancel() {
+    this.router.navigate(['/settings']);
   }
 }

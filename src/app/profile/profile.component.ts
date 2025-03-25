@@ -53,7 +53,9 @@ export class ProfileComponent implements OnInit {
 
   openEditDialog() {
     const dialogRef = this.dialog.open(EditProfileComponent, {
-      width: '600px',
+      width: '80%',
+      maxWidth: '1000px',
+      panelClass: 'custom-dialog-container',
       data: this.userProfile,
     });
 
@@ -62,7 +64,7 @@ export class ProfileComponent implements OnInit {
       this.editMode = false;
       this.ngOnInit(); // Reload the profile after saving
     });
-    
-    this.editMode =true;
+
+    this.editMode = true;
   }
 }

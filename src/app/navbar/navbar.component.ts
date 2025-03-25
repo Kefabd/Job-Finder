@@ -7,7 +7,7 @@ import { inject } from '@angular/core';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
   currentRoute!: string;
@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit {
         this.userName = user.displayName || 'No Name';
         this.userEmail = user.email || 'No Email';
         this.userPic = user.photoURL;
+        console.log(this.userPic);
         //await this.fetchUserProfile(user.uid); // Fetch user details from Firestore
       } else {
         this.userName = 'Guest';
@@ -38,7 +39,7 @@ export class NavbarComponent implements OnInit {
         console.log('No user logged in');
       }
     });
-  } 
+  }
 
   async fetchUserProfile(userId: string) {
     try {

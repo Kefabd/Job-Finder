@@ -23,6 +23,7 @@ const routes: Routes = [
   // { path: 'edit', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'settings/edit', component: EditProfileComponent },
   { path: '**', redirectTo: '/login' },
 ];
 

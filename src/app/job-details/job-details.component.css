@@ -126,12 +126,24 @@ footer.job-actions {
   transition: all 0.3s ease;
 }
 
+
 .save-button:hover {
   background: rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
 
 .apply-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: #fff;
+  background: linear-gradient(135deg, #0066cc, #0099ff);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.alr-apply-button {
   padding: 1rem 2rem;
   font-size: 1.2rem;
   color: #fff;

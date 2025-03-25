@@ -3,8 +3,11 @@
   display: flex;
   width: 100%;
   min-height: 100vh; /* so it spans full height */
-  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0;
+  justify-content: center;
+
 }
 
 /* 2. Navbar on the left (fixed) */
@@ -20,15 +23,15 @@
 
 /* 3. Main content to the right */
 .main-content {
-  margin-left: 200px; /* offset for the navbar width */
+  margin-left: 200px; /* Keep space for the navbar */
   width: calc(100% - 200px);
-  padding: 1rem;
-
-  /* This is critical to center the container horizontally */
   display: flex;
-  justify-content: center;
-  align-items: flex-start; /* align items at the top (change to center if you want vertical centering too) */
+  justify-content: center;  /* Center horizontally */
+  align-items: center;  /* Center vertically */
+  height: 100vh;  /* Make it full height */
 }
+
+
 
 /* 4. The Edit Profile "card" */
 .edit-profile-container {

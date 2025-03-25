@@ -28,8 +28,8 @@
                               <div class="profile-left">
                                     <div class="profile-picture">
                                           <!-- Display user photo if exists, otherwise default initials -->
-                                          <img *ngIf="userProfile.photoURL; else defaultAvatar"
-                                                [src]="userProfile.photoURL" alt="Profile Picture" />
+                                          <img *ngIf="userProfile.photoUrl; else defaultAvatar"
+                                                [src]="userProfile.photoUrl" alt="Profile Picture" />
                                           <ng-template #defaultAvatar>
                                                 <div class="default-avatar">
                                                       {{ getInitials(userProfile.firstName, userProfile.lastName) }}
@@ -38,8 +38,8 @@
                                     </div>
                                     <div class="profile-info">
                                           <h2>
-                                                {{ userProfile.firstName || 'Not yet filled' }}
-                                                {{ userProfile.lastName || 'Not yet filled' }}
+                                                {{ userProfile.firstName.charAt(0).toUpperCase() + userProfile.firstName.slice(1) || 'Not yet filled' }}
+                                                {{ userProfile.lastName.toUpperCase() || 'Not yet filled' }}
                                           </h2>
                                           <p>Email: {{ userProfile.email || 'Not yet filled' }}</p>
                                     </div>
@@ -53,39 +53,40 @@
                         </div>
 
                         <!-- Extra Info Notice -->
-                        <div class="profile-extra">
-                              <p>Please add the following details to complete your CV:</p>
-                        </div>
-
-                        <!-- Experience Section -->
-                        <div class="section">
-                              <h3>Experience</h3>
-                              <div *ngIf="userProfile.experience?.length > 0; else noExperience">
-                                    <div *ngFor="let exp of userProfile.experience" class="experience-item">
-                                          <h4>{{ exp.title }} at {{ exp.company }}</h4>
-                                          <p>{{ exp.startDate | date }} - {{ exp.endDate | date }}</p>
-                                          <p>{{ exp.description }}</p>
-                                    </div>
+                        <div *ngIf="!editMode">
+                              <div class="profile-extra">
+                                    <p>Please add the following details to complete your CV:</p>
                               </div>
-                              <ng-template #noExperience>
-                                    <p>No experience added yet. Click on edit to add your work history.</p>
-                              </ng-template>
-                        </div>
 
-                        <!-- Education Section -->
-                        <div class="section">
-                              <h3>Education</h3>
-                              <div *ngIf="userProfile.academicBackground?.length > 0; else noEducation">
-                                    <div *ngFor="let edu of userProfile.academicBackground" class="education-item">
-                                          <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
-                                          <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{ edu.endDate | date
-                                                }})</p>
+                              <div class="section">
+                                    <h3>Experience</h3>
+                                    <div *ngIf="userProfile.experience?.length > 0; else noExperience">
+                                          <div *ngFor="let exp of userProfile.experience" class="experience-item">
+                                                <h4>{{ exp.title }} at {{ exp.company }}</h4>
+                                                <p>{{ exp.startDate | date }} - {{ exp.endDate | date }}</p>
+                                                <p>{{ exp.description }}</p>
+                                          </div>
                                     </div>
+                                    <ng-template #noExperience>
+                                          <p>No experience added yet. Click on edit to add your work history.</p>
+                                    </ng-template>
                               </div>
-                              <ng-template #noEducation>
-                                    <p>No education details added yet. Click on edit to add your academic background.
-                                    </p>
-                              </ng-template>
+
+                              <!-- Education Section -->
+                              <div class="section">
+                                    <h3>Education</h3>
+                                    <div *ngIf="userProfile.academicBackground?.length > 0; else noEducation">
+                                          <div *ngFor="let edu of userProfile.academicBackground" class="education-item">
+                                                <h4>{{ edu.degree }} in {{ edu.fieldOfStudy }}</h4>
+                                                <p>{{ edu.institution }} ({{ edu.startDate | date }} - {{ edu.endDate | date
+                                                      }})</p>
+                                          </div>
+                                    </div>
+                                    <ng-template #noEducation>
+                                          <p>No education details added yet. Click on edit to add your academic background.
+                                          </p>
+                                    </ng-template>
+                              </div>
                         </div>
                   </div>
             </div>

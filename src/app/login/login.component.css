@@ -176,16 +176,16 @@
 /* Dark Mode Adjustments */
 @media (prefers-color-scheme: dark) {
   .login-wrapper {
-    background: #2d3748;
+    background: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   }
   .login-container h2,
   .login-container p,
   .login-container form div label {
-    color: #f7fafc;
+    color: #000000;
   }
   .login-container form div input {
-    background: #1a202c;
+    background: #ffffff;
     border-color: #4a5568;
     color: #f7fafc;
   }
@@ -194,8 +194,8 @@
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
   }
   .google-signin-btn {
-    background: #2d3748;
-    color: #e2e8f0;
+    background: #ffffff;
+    color: #000000;
     border-color: #4a5568;
   }
   .google-signin-btn:hover {

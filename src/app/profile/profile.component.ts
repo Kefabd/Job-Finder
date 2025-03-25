@@ -13,9 +13,11 @@ export class ProfileComponent implements OnInit {
   userProfile: any = {};
   loading = true;
   hasProfile = false;
+  editMode = false;
+
   getInitials(firstName: string, lastName: string): string {
     const first = firstName ? firstName.charAt(0).toUpperCase() : '';
-    const last = lastName ? lastName.charAt(0).toUpperCase() : '';
+    const last = lastName ? lastName.toUpperCase() : '';
     return first + last;
   }
 
@@ -37,6 +39,7 @@ export class ProfileComponent implements OnInit {
       if (userDoc.exists()) {
         this.userProfile = userDoc.data();
         this.hasProfile = true;
+        console.log(this.userProfile);
       } else {
         this.userProfile = {};
         this.hasProfile = false;
@@ -54,6 +57,12 @@ export class ProfileComponent implements OnInit {
       data: this.userProfile,
     });
 
-    dialogRef.afterClosed().subscribe(() => this.ngOnInit());
+    // Close the dialog and reset the edit mode
+    dialogRef.afterClosed().subscribe(() => {
+      this.editMode = false;
+      this.ngOnInit(); // Reload the profile after saving
+    });
+    
+    this.editMode =true;
   }
 }

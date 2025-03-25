@@ -103,8 +103,14 @@ export class JobDetailsComponent implements OnInit {
     this.showApplyPopup = true;
   }
 
-   // Check if the current job is saved or applied by the current user
-   async checkJobStatus(): Promise<void> {
+  openAlreadyApplyPopup(): void {
+    // First redirect the user to the job application page
+    alert("You've already applied for this job");
+  }
+
+
+  // Check if the current job is saved or applied by the current user
+  async checkJobStatus(): Promise<void> {
     const auth = getAuth();
     const user = auth.currentUser;
     if (!user) {

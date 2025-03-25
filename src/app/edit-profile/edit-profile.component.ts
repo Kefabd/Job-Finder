@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { getAuth } from '@angular/fire/auth';
 
@@ -81,16 +81,16 @@ export class EditProfileComponent implements OnInit {
     if (this.profileForm.valid) {
       const auth = getAuth();
       const user = auth.currentUser;
-
+  
       if (user) {
         try {
-          // Include userId in the document data
-          const formData = {
-            userId: user.uid,
-            ...this.profileForm.value,
-          };
-
-          await setDoc(doc(this.firestore, 'users', user.uid), formData);
+          // Reference to the Firestore document
+          const userDocRef = doc(this.firestore, 'users', user.uid);
+  
+          // Update only the fields that have been modified in the form
+          await updateDoc(userDocRef, this.profileForm.value);
+  
+          // Optionally, close the dialog or notify user
           this.dialogRef.close(true);
         } catch (error) {
           console.error('Error updating profile:', error);

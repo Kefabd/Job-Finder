@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
 
       if (userDocSnap.exists()) {
         const userData = userDocSnap.data();
-        this.userPic = userData['photoUrl'] || 'assets/default-profile.png';
+        this.userPic = userData['photoURL'] || 'assets/default-profile.png';
         console.log(this.userPic);
       } else {
         console.log('No user data found in Firestore');
@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
   }
 
   shouldShowNavbar(): boolean {
-    return this.router.url !== '/login' && this.router.url !== '/register';
+    return this.router.url !== '/login' && this.router.url !== '/register' && this.router.url !== '/forgot-password';
   }
 
   handleLogout() {
